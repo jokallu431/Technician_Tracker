@@ -1,5 +1,6 @@
 
 import './App.css'
+import Login from './components/Login'
 import Tech_Dashboard from './components/Tech_Dashboard'
 // import Delete from './components/Delete'
 // import Form from './components/Form'
@@ -11,8 +12,11 @@ function App() {
 
   return (
   <>
-    <Tech_Dashboard/>
+  <div className='task'> 
+  <Login/>
+    {/*<Tech_Dashboard/>*/}
       {/* <User_profile/> */}
+      </div>
     </>
   )
 }
