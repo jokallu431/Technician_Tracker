@@ -1,14 +1,13 @@
 
 import './App.css'
-import Tech_Dashboard from './Tech_Dashboard'
+import Tech_Dashboard from './components/Tech_Dashboard'
 
 function App() {
 
 
   return (
-    <>
-      <Tech_Dashboard/>
-    </>
+    <Tech_Dashboard/>
+    
   )
 }
 
