@@ -1,16 +1,22 @@
 function Login(){
+    let login=()=>{
+        alert('Login Success')
+    }
     return(
         <>
-        <label>Name</label>
+        <div>    
+        <label>Email</label>
         <br/>
-        <input name="Name" placeholder="Enter your Name"></input>
+        <input name="Email" placeholder="Enter your Email here"></input>
         <br/>
         <br/>
         <label>Password</label>
+        <br/>
         <input name="Password" placeholder="Enter Password"></input>
         <br/>
         <br/>
-        <button>Login</button>
+        <button onClick={login}>Login</button>
+        </div>
         </>
     )
 }
