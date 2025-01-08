@@ -8,11 +8,11 @@ return(
 Create a new Profile
 <br/>
 <br/>
-<label> Name :</label>
+<label>Name :</label>
 <br/>
 <input name="User_Name" type="text" placeholder='Enter Name here'></input>
 <br/>
-<label> Phone No. :</label>
+<label>Phone :</label>
 <br/>
 <input name="Phone No." type="tel" placeholder='Enter Phone Number'></input>
 <br/>
