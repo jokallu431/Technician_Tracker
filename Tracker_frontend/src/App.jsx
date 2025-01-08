@@ -1,5 +1,7 @@
 
 import './App.css'
+import ForgetPassword from './components/ForgetPassword';
+import Layout from './components/Layout'
 import Login from './components/Login'
 // import Tech_Dashboard from './components/Tech_Dashboard'
 // import Delete from './components/Delete'
@@ -12,11 +14,27 @@ function App() {
 
   return (
   <>
-  <div className='task'> 
+  {/* <div className='task'> 
   <Login/>
-    {/*<Tech_Dashboard/>*/}
-      {/* <User_profile/> */}
-      </div>
+  <Layout/>
+   <div id="wrapper">
+    <Tech_Dashboard/>
+    </div>
+      <User_profile/>
+      </div> */}
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout/>}>
+              <Route index="/login"  element={<Login/>}></Route>
+              <Route path="/login"  element={<Login/>}></Route>
+              <Route path="/signup"  element={<Signup/>}></Route>
+              <Route path="/forgetpassword"  element={<ForgetPassword/>}></Route>
+              <Route path="/dashboard"  element={<Tech_Dashboard/>}></Route>
+          </Route>
+          
+        </Routes>
+    </BrowserRouter>
     </>
   )
 }

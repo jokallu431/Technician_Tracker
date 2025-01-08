@@ -1,3 +1,5 @@
+import { Link,useNavigate } from 'react-router';
+import logo from '../assets/Tech-Logo.ico'
 function Login(){
     let login=()=>{
         alert('Login Success')
