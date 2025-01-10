@@ -1,46 +1,43 @@
-
-
-import './App.css'
-import ForgetPassword from './components/ForgetPassword';
-import Layout from './components/Layout'
-import Login from './components/Login'
-import Signup from './components/Signup';
-import Tech_Dashboard from './components/Tech_Dashboard'
-import {BrowserRouter, Routes, Route} from 'react-router';
+import "./App.css";
+import ForgetPassword from "./components/ForgetPassword";
+import Layout from "./components/Layout";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import Tech_Dashboard from "./components/Tech_Dashboard";
+import { BrowserRouter, Routes, Route } from "react-router";
+import Tech_Layout from "./components/Tech_Layout";
+import Pending_Task from "./components/Pending_Task";
+import Completed_Task from "./components/Completed_Task";
+import User_profile from "./components/User_profile";
 // import Delete from './components/Delete'
 // import Form from './components/Form'
 // import User_profile from './components/User_profile'
 // import Update from './components/Update'
 
 function App() {
-  
-
-
   return (
-  <>
-  {/* <div className='task'> 
-  <Login/>
-  <Layout/>
-   <div id="wrapper">
-    <Tech_Dashboard/>
-    </div>
-      <User_profile/>
-      </div> */}
-
+    <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout/>}>
-              <Route index="/login"  element={<Login/>}></Route>
-              <Route path="/login"  element={<Login/>}></Route>
-              <Route path="/signup"  element={<Signup/>}></Route>
-              <Route path="/forgetpassword"  element={<ForgetPassword/>}></Route>
-              <Route path="/dashboard"  element={<Tech_Dashboard/>}></Route>
+          {/* Public Routes */}
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Login />} />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="forgetpassword" element={<ForgetPassword />} />
           </Route>
-          
+
+          {/* Protected Routes */}
+          <Route path="/dashboard" element={<Tech_Layout />}>
+            <Route index element={<Tech_Dashboard />} />
+            <Route path="pending" element={<Pending_Task />} />
+            <Route path="completed" element={<Completed_Task />} />
+            <Route path="profile" element={<User_profile />} />
+          </Route>
         </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
