@@ -38,6 +38,12 @@ const Signup = () => {
                                  </div>
                              </div>
                              <div className="col-12">
+                                 <div className="form-floating mb-3">
+                                 <input type="confirm_password" className="form-control" name="confirm_password" id="confirm_password" value="" placeholder="Password" required/>
+                                 <label for="confirm_password" className="form-label">Confirm Password</label>
+                                 </div>
+                             </div>
+                             <div className="col-12">
                                  <div className="form-check">
                                  <input className="form-check-input" type="checkbox" value="" name="remember_me" id="remember_me"/>
                                  <label className="form-check-label text-secondary" for="remember_me">
