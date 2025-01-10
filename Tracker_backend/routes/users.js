@@ -54,10 +54,12 @@ router.post('/profile',async function(req, res, next){
   let password=(req.body.password);
   let name=(req.body.name);
   let email=(req.body.email);
+  let phone=(req.body.phone);
+  let role=(req.body.role);
 
   let securePassword= await encrypt(password);
     console.log("secure password :", securePassword)
-  userModel.create({name:name,email:email,password:securePassword}).then((newuser)=>{
+  userModel.create({name:name,email:email,password:securePassword,phone:phone,role:role}).then((newuser)=>{
   res.send(newuser)
   }).catch((e)=>{
   res.send('Error while creating User details')
@@ -77,17 +79,17 @@ router.post('/login', async function(req, res, next) {
       console.log(user);
       let result= await decrypt(password,user.password);
       console.log(user);
-        if (result==true){
+          if (result==true){
           let token = generateAccessToken(JSON.stringify(user));
           res.send({
-            message :"User List",
+              message :"User List",
               status:"Success decrypt",
               data:user,token
         })
     }}
     else{
       res.send(null)
-      message :"Invalid login"
+              message :"Invalid login"
     }
   
 });
@@ -96,19 +98,6 @@ router.post('/login', async function(req, res, next) {
 
 
 /* Token Verification */
-// router.get('/verify', async function(req, res, next) {
-//   console.log("details called");
-//     let split = verifyToken(req.headers.authorization.split(" ")[1]);
-//     console.log(split);
-
-   
-//     let user = await userModel.findById(split._Id);
-//     console.log(split._Id)
-//       console.log("Users Details")
-//       console.log(user)
-//       res.send(user);
-//     });
-    
 router.get('/verify', function (req, res, next){
 
     let token= verifyToken(req.headers.authorization.split(" ")[1]);
@@ -120,8 +109,55 @@ router.get('/verify', function (req, res, next){
       res.send({
         "Message":'User_List',
         "Data": user
-      })
-    })
-})
+      });
+    });
+});
+
+
+/* Update userv details */
+router.patch('/user_update',function(req,res,next){
+  let id=req.body._id;
+  userModel.findById(id).updateOne(req.body).then((task)=>{
+      console.log(user)
+  res.send(user)
+});
+});
+
+/* Delete user details */
+router.delete('/user_delete',function(req,res,next){
+  let id=req.body._id;
+  userModel.findByIdAndDelete(id).then((users)=>{
+  res.send(users)
+});
+});
+
+const taskSchema = new Schema({
+  id :String,
+  name:String,
+  description:Object,
+  address:Object,
+  date:String,
+  status:String,
+  assigned_to:String
+  });
+  
+  const taskModel=mongoose.model('tasks',taskSchema);
+  
+  /* New Task Creation */
+  router.post('/task_create',function(req,res,next){
+      taskModel.create(req.body).then((newTask)=>{
+      res.send(newTask)
+  });
+  });
+
+  /* Update task details */
+  router.patch('/task_update',function(req,res,next){
+      let id=req.body._id;
+      
+      taskModel.findById(id).updateOne(req.body).then((task)=>{
+      console.log(task)
+      res.send(task)
+});
+});
 
 module.exports = router;
