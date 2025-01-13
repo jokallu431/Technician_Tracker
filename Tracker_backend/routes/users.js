@@ -50,16 +50,34 @@ return result;
 
 
 /* User Profile Creation */
-router.post('/profile',async function(req, res, next){
-  let password=(req.body.password);
-  let name=(req.body.name);
-  let email=(req.body.email);
-  let phone=(req.body.phone);
-  let role=(req.body.role);
+// router.post('/profile',async function(req, res, next){
+//   // let password=(req.body.password);
+//   let name=(req.body.name);
+//   // let email=(req.body.email);
+//   // let phone=(req.body.phone);
+//   // let role=(req.body.role);
 
-  let securePassword= await encrypt(password);
-    console.log("secure password :", securePassword)
-  userModel.create({name:name,email:email,password:securePassword,phone:phone,role:role}).then((newuser)=>{
+//   // let securePassword= await encrypt(password);
+//   // console.log("secure password :", securePassword)
+//   userModel.create({name:name}).then((newuser)=>{
+//   res.send(newuser)
+//   }).catch((e)=>{
+//   res.send('Error while creating User details')
+//   });
+// });
+
+/* User Profile Creation */
+router.post('/profile',async function(req, res, next){
+  // let password=(req.body.password);
+  let name=req.body.name;
+  console.log("name :", name)
+  // let email=(req.body.email);
+  // let phone=(req.body.phone);
+  // let role=(req.body.role);
+
+  // let securePassword= await encrypt(password);
+    // console.log("secure password :", securePassword)
+  userModel.create({name:name}).then((newuser)=>{
   res.send(newuser)
   }).catch((e)=>{
   res.send('Error while creating User details')
@@ -157,6 +175,7 @@ router.get('/task_get',function(req,res,next){
 /* Update task details */
 router.patch('/task_update',function(req,res,next){
     let id=req.body._id;
+  
     taskModel.findById(id).updateOne(req.body).then((task)=>{
         console.log(task)
     res.send(task)
