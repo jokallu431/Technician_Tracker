@@ -3,22 +3,22 @@ import { useNavigate } from "react-router";
 
 function UserProfile() {
   const nameRef = useRef();
-  // const phoneRef = useRef();
-  // const emailRef = useRef();
-  // const passwordRef = useRef();
-  // const roleRef = useRef();
+  const phoneRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const roleRef = useRef();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    // e.preventDefault();
+  const handleSubmit = (e) => { 
+    e.preventDefault();
 
     // Collect form data using useRef
     const formData = {
       name: nameRef.current.value,
-      // phone: phoneRef.current.value,
-      // email: phoneRef.current.value,
-      // password: passwordRef.current.value,
-      // role: roleRef.current.value,
+      phone: phoneRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+      role: roleRef.current.value,
     };
 
     console.log("Submitting:", formData);
@@ -26,19 +26,17 @@ function UserProfile() {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData[0]),
+      body: JSON.stringify(formData),
     };
       console.log("after stringify",formData);
       
     fetch("http://localhost:4000/users/profile", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log("Response",response);
-        
         console.log("Profile created successfully:", result);
-
         // Navigate to another page on success
-        navigate("/profile_success");
+        
+        navigate("/login");
       })
       .catch((error) => console.error("Error creating profile:", error));
   };
@@ -56,7 +54,7 @@ function UserProfile() {
                       <div className="mb-5">
                         <h4 className="text-center">
                           {" "}
-                          Let's Create a Profile!
+                          Lets Create a Profile!
                         </h4>
                       </div>
                     </div>
@@ -78,8 +76,7 @@ function UserProfile() {
                           </label>
                         </div>
                       </div>
-                      {/* Uncomment and refactor additional inputs as needed */}
-                      {/* <div className="col-12">
+                      <div className="col-12">
                         <div className="form-floating mb-3">
                           <input
                             type="phone"
@@ -120,7 +117,24 @@ function UserProfile() {
                             Password
                           </label>
                         </div>
-                      </div> */}
+                      </div>
+                      <div className="col-12">
+                        <div className="form-floating mb-3">
+                          <select
+                            className="form-control"
+                            name="role"
+                            ref={roleRef}
+                            required
+                          >
+                            <option value="" disabled>
+                              Select Role
+                            </option>
+                            <option value="admin">Admin</option>
+                            <option value="technician">Technician</option>
+                          </select>
+                          <label className="form-label">Role</label>
+                        </div>
+                      </div> 
                       <div className="col-12">
                         <div className="d-grid">
                           <button className="btn bsb-btn-xl btn-primary">
