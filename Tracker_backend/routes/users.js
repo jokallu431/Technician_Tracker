@@ -43,9 +43,9 @@ let hash = await bcrypt.hash(password,saltRounds);
       return hash;
   };
 
-  async function decrypt(password,hash){
-  let result= await bcrypt.compare(password,hash);
-  return result;
+async function decrypt(password,hash){
+let result= await bcrypt.compare(password,hash);
+return result;
 }
 
 
@@ -90,12 +90,10 @@ router.post('/login', async function(req, res, next) {
     else{
       res.send(null)
               message :"Invalid login"
-    }
-  
+    } 
 });
 
-
-
+/*Tokens*/
 
 /* Token Verification */
 router.get('/verify', function (req, res, next){
@@ -112,7 +110,6 @@ router.get('/verify', function (req, res, next){
       });
     });
 });
-
 
 /* Update userv details */
 router.patch('/user_update',function(req,res,next){
@@ -143,20 +140,34 @@ const taskSchema = new Schema({
   
   const taskModel=mongoose.model('tasks',taskSchema);
   
-  /* New Task Creation */
-  router.post('/task_create',function(req,res,next){
-      taskModel.create(req.body).then((newTask)=>{
-      res.send(newTask)
+/* New Task Creation */
+router.post('/task_create',function(req,res,next){
+    taskModel.create(req.body).then((newTask)=>{
+    res.send(newTask)
   });
   });
 
-  /* Update task details */
-  router.patch('/task_update',function(req,res,next){
-      let id=req.body._id;
-      
-      taskModel.findById(id).updateOne(req.body).then((task)=>{
-      console.log(task)
-      res.send(task)
+/* Read task details */
+router.get('/task_get',function(req,res,next){
+  taskModel.find().then((tasks)=>{
+  res.send(tasks)
+});
+});
+
+/* Update task details */
+router.patch('/task_update',function(req,res,next){
+    let id=req.body._id;
+    taskModel.findById(id).updateOne(req.body).then((task)=>{
+        console.log(task)
+    res.send(task)
+});
+});
+
+/* Delete task details */
+router.delete('/task_delete',function(req,res,next){
+  let id=req.body._id;
+  taskModel.findByIdAndDelete(id).then((tasks)=>{
+  res.send(tasks)
 });
 });
 
