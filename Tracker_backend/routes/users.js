@@ -43,23 +43,41 @@ let hash = await bcrypt.hash(password,saltRounds);
       return hash;
   };
 
-  async function decrypt(password,hash){
-  let result= await bcrypt.compare(password,hash);
-  return result;
+async function decrypt(password,hash){
+let result= await bcrypt.compare(password,hash);
+return result;
 }
 
 
 /* User Profile Creation */
-router.post('/profile',async function(req, res, next){
-  let password=(req.body.password);
-  let name=(req.body.name);
-  let email=(req.body.email);
-  let phone=(req.body.phone);
-  let role=(req.body.role);
+// router.post('/profile',async function(req, res, next){
+//   // let password=(req.body.password);
+//   let name=(req.body.name);
+//   // let email=(req.body.email);
+//   // let phone=(req.body.phone);
+//   // let role=(req.body.role);
 
-  let securePassword= await encrypt(password);
-    console.log("secure password :", securePassword)
-  userModel.create({name:name,email:email,password:securePassword,phone:phone,role:role}).then((newuser)=>{
+//   // let securePassword= await encrypt(password);
+//   // console.log("secure password :", securePassword)
+//   userModel.create({name:name}).then((newuser)=>{
+//   res.send(newuser)
+//   }).catch((e)=>{
+//   res.send('Error while creating User details')
+//   });
+// });
+
+/* User Profile Creation */
+router.post('/profile',async function(req, res, next){
+  // let password=(req.body.password);
+  let name=req.body.name;
+  console.log("name :", name)
+  // let email=(req.body.email);
+  // let phone=(req.body.phone);
+  // let role=(req.body.role);
+
+  // let securePassword= await encrypt(password);
+    // console.log("secure password :", securePassword)
+  userModel.create({name:name}).then((newuser)=>{
   res.send(newuser)
   }).catch((e)=>{
   res.send('Error while creating User details')
@@ -90,12 +108,10 @@ router.post('/login', async function(req, res, next) {
     else{
       res.send(null)
               message :"Invalid login"
-    }
-  
+    } 
 });
 
-
-
+/*Tokens*/
 
 /* Token Verification */
 router.get('/verify', function (req, res, next){
@@ -112,7 +128,6 @@ router.get('/verify', function (req, res, next){
       });
     });
 });
-
 
 /* Update userv details */
 router.patch('/user_update',function(req,res,next){
@@ -143,20 +158,35 @@ const taskSchema = new Schema({
   
   const taskModel=mongoose.model('tasks',taskSchema);
   
-  /* New Task Creation */
-  router.post('/task_create',function(req,res,next){
-      taskModel.create(req.body).then((newTask)=>{
-      res.send(newTask)
+/* New Task Creation */
+router.post('/task_create',function(req,res,next){
+    taskModel.create(req.body).then((newTask)=>{
+    res.send(newTask)
   });
   });
 
-  /* Update task details */
-  router.patch('/task_update',function(req,res,next){
-      let id=req.body._id;
-      
-      taskModel.findById(id).updateOne(req.body).then((task)=>{
-      console.log(task)
-      res.send(task)
+/* Read task details */
+router.get('/task_get',function(req,res,next){
+  taskModel.find().then((tasks)=>{
+  res.send(tasks)
+});
+});
+
+/* Update task details */
+router.patch('/task_update',function(req,res,next){
+    let id=req.body._id;
+  
+    taskModel.findById(id).updateOne(req.body).then((task)=>{
+        console.log(task)
+    res.send(task)
+});
+});
+
+/* Delete task details */
+router.delete('/task_delete',function(req,res,next){
+  let id=req.body._id;
+  taskModel.findByIdAndDelete(id).then((tasks)=>{
+  res.send(tasks)
 });
 });
 

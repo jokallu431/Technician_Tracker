@@ -1,44 +1,37 @@
-import { useRef } from "react";
-import { useNavigate } from "react-router";
+import { useState } from "react";
+function Profile() {
+    const [formData, setFormData] = useState({
+        name: "",
+        // email: "",
+        // phone: "",
+        // password: "",
+        // role: "",
+    });
+    const navigate = useNavigate();
 
-function UserProfile() {
-  const nameRef = useRef();
-  // const phoneRef = useRef();
-  // const emailRef = useRef();
-  // const passwordRef = useRef();
-  // const roleRef = useRef();
-  const navigate = useNavigate();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (e) => {
     // e.preventDefault();
-
-    // Collect form data using useRef
-    const formData = {
-      name: nameRef.current.value,
-      // phone: phoneRef.current.value,
-      // email: phoneRef.current.value,
-      // password: passwordRef.current.value,
-      // role: roleRef.current.value,
-    };
-
     console.log("Submitting:", formData);
 
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData[0]),
+      body: JSON.stringify(),
     };
-      console.log("after stringify",formData);
-      
+
     fetch("http://localhost:4000/users/profile", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log("Response",response);
-        
         console.log("Profile created successfully:", result);
-
-        // Navigate to another page on success
-        navigate("/profile_success");
+        navigate("/success");
       })
       .catch((error) => console.error("Error creating profile:", error));
   };
@@ -54,57 +47,52 @@ function UserProfile() {
                   <div className="row">
                     <div className="col-12">
                       <div className="mb-5">
-                        <h4 className="text-center">
-                          {" "}
-                          Let's Create a Profile!
-                        </h4>
+                        <h4 className="text-center">Let's Create a Profile!</h4>
                       </div>
                     </div>
                   </div>
-                  <form method="Post" onSubmit={handleSubmit}>
+                  <form method="POST" onSubmit={handleSubmit}>
                     <div className="row gy-3 overflow-hidden">
                       <div className="col-12">
                         <div className="form-floating mb-3">
                           <input
                             type="text"
                             className="form-control"
-                            id="name"
+                            name="name"
                             placeholder="Enter your full name"
-                            ref={nameRef}
+                            value={formData.name}
+                            onChange={handleChange}
                             required
                           />
-                          <label htmlFor="name" className="form-label">
-                            Name
-                          </label>
+                          <label className="form-label">Name</label>
                         </div>
                       </div>
-                      {/* Uncomment and refactor additional inputs as needed */}
                       {/* <div className="col-12">
                         <div className="form-floating mb-3">
                           <input
-                            type="phone"
+                            type="email"
                             className="form-control"
-                            id="phone"
-                            placeholder="Enter your phone number"
-                            ref={phoneRef}
+                            name="email"
+                            placeholder="name@example.com"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
                           />
-                          <label htmlFor="phone" className="form-label">
-                            Phone No.
-                          </label>
+                          <label className="form-label">Email</label>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="form-floating mb-3">
                           <input
-                            type="email"
+                            type="text"
                             className="form-control"
-                            id="email"
-                            placeholder="name@example.com"
-                            ref={emailRef}
+                            name="phone"
+                            placeholder="Phone Number"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            required
                           />
-                          <label htmlFor="email" className="form-label">
-                            Email
-                          </label>
+                          <label className="form-label">Phone</label>
                         </div>
                       </div>
                       <div className="col-12">
@@ -112,13 +100,31 @@ function UserProfile() {
                           <input
                             type="password"
                             className="form-control"
-                            id="password"
+                            name="password"
                             placeholder="Password"
-                            ref={passwordRef}
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
                           />
-                          <label htmlFor="password" className="form-label">
-                            Password
-                          </label>
+                          <label className="form-label">Password</label>
+                        </div>
+                      </div>
+                      <div className="col-12">
+                        <div className="form-floating mb-3">
+                          <select
+                            className="form-control"
+                            name="role"
+                            value={formData.role}
+                            onChange={handleChange}
+                            required
+                          >
+                            <option value="" disabled>
+                              Select Role
+                            </option>
+                            <option value="admin">Admin</option>
+                            <option value="technician">Technician</option>
+                          </select>
+                          <label className="form-label">Role</label>
                         </div>
                       </div> */}
                       <div className="col-12">
@@ -140,4 +146,4 @@ function UserProfile() {
   );
 }
 
-export default UserProfile;
+export default Profile;
