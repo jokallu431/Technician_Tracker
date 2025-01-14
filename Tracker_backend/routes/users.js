@@ -25,7 +25,6 @@ const userModel=mongoose.model('profiles',userSchema);
 
 /* Token Generation */
 function generateAccessToken(username){
-  console.log("generate JWT", username)
   // return jwt.sign({
   //   exp: Math.floor(Date.now() / 1000) + (60 * 60),
   //   data: username
@@ -68,16 +67,16 @@ return result;
 
 /* User Profile Creation */
 router.post('/profile',async function(req, res, next){
-  // let password=(req.body.password);
+  let password=(req.body.password);
   let name=req.body.name;
   console.log("name :", name)
-  // let email=(req.body.email);
-  // let phone=(req.body.phone);
-  // let role=(req.body.role);
+  let email=(req.body.email);
+  let phone=(req.body.phone);
+  let role=(req.body.role);
 
-  // let securePassword= await encrypt(password);
-    // console.log("secure password :", securePassword)
-  userModel.create({name:name}).then((newuser)=>{
+  let securePassword= await encrypt(password);
+    console.log("secure password :", securePassword)
+  userModel.create({name:name,email:email,password:securePassword,phone:phone,role:role}).then((newuser)=>{
   res.send(newuser)
   }).catch((e)=>{
   res.send('Error while creating User details')
@@ -106,8 +105,11 @@ router.post('/login', async function(req, res, next) {
         })
     }}
     else{
-      res.send(null)
-              message :"Invalid login"
+      res.send({
+        message :"User List",
+        status:"Login failed. Try again",
+        data:[]
+  })
     } 
 });
 
