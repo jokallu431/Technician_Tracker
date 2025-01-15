@@ -1,6 +1,5 @@
-import React from "react";
 import logo from "../assets/Tech-Logo.png";
-import { Link, NavLink, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 const Sidebar = () => {
   const navigate = useNavigate();
   const navigateTo = (path) => () => {
@@ -74,6 +73,12 @@ const Sidebar = () => {
               </button> */}
               <button
                 className="collapse-item btn btn-outline-light"
+                onClick={navigateTo("/dashboard/createTask")}
+              >
+                Create Task
+              </button>
+              <button
+                className="collapse-item btn btn-outline-light"
                 onClick={navigateTo("/dashboard/pending")}
               >
                 Pending Task
@@ -96,6 +101,43 @@ const Sidebar = () => {
               >
                 Assigned Task
               </button>
+            </div>
+          </div>
+        </li>
+        {/* <!-- Nav Item - Pages Collapse Menu --> */}
+        <li className="nav-item">
+          <Link
+            className="nav-link collapsed"
+            onClick={() => navigate("/dashboard")}
+            data-toggle="collapse"
+            data-target="#Branch"
+            aria-expanded="true"
+            aria-controls="collapseUtilities"
+          >
+            <i className="fas fa-fw fa-wrench"></i>
+            <span>Branches</span>
+          </Link>
+          <div
+            id="Branch"
+            className="collapse"
+            aria-labelledby="headingUtilities"
+            data-parent="#accordionSidebar"
+          >
+            <div className="bg-white py-2 collapse-inner rounded">
+              <h6 className="collapse-header">Branches Classification:</h6>
+              <button
+                className="collapse-item btn btn-outline-light"
+                onClick={navigateTo("/dashboard/createBranch")}
+              >
+                Create Branches
+              </button>
+              <button
+                className="collapse-item btn btn-outline-light"
+                onClick={navigateTo("/dashboard/Branchlist")}
+              >
+               Technician List
+              </button>
+              
             </div>
           </div>
         </li>

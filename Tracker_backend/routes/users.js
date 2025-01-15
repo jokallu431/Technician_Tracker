@@ -8,7 +8,7 @@ const saltRounds = 10;
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://127.0.0.1:27017/Tech_Trace')
-  .then(() => console.log('DB Connected!'));
+  .then(() => console.log('DB Connected for Users!'));
 
 const Schema=mongoose.Schema;
 
@@ -67,15 +67,15 @@ return result;
 
 /* User Profile Creation */
 router.post('/profile',async function(req, res, next){
-  let password=(req.body.password);
+  let password=req.body.password;
   let name=req.body.name;
-  console.log("name :", name)
-  let email=(req.body.email);
-  let phone=(req.body.phone);
-  let role=(req.body.role);
+  let email=req.body.email;
+  let phone=req.body.phone;
+  let role=req.body.role;
+  
 
   let securePassword= await encrypt(password);
-    console.log("secure password :", securePassword)
+  console.log("secure password :", securePassword)
   userModel.create({name:name,email:email,password:securePassword,phone:phone,role:role}).then((newuser)=>{
   res.send(newuser)
   }).catch((e)=>{
@@ -131,7 +131,7 @@ router.get('/verify', function (req, res, next){
     });
 });
 
-/* Update userv details */
+/* Update user details */
 router.patch('/user_update',function(req,res,next){
   let id=req.body._id;
   userModel.findById(id).updateOne(req.body).then((task)=>{
@@ -148,48 +148,6 @@ router.delete('/user_delete',function(req,res,next){
 });
 });
 
-const taskSchema = new Schema({
-  id :String,
-  name:String,
-  description:Object,
-  address:Object,
-  date:String,
-  status:String,
-  assigned_to:String
-  });
-  
-  const taskModel=mongoose.model('tasks',taskSchema);
-  
-/* New Task Creation */
-router.post('/task_create',function(req,res,next){
-    taskModel.create(req.body).then((newTask)=>{
-    res.send(newTask)
-  });
-  });
 
-/* Read task details */
-router.get('/task_get',function(req,res,next){
-  taskModel.find().then((tasks)=>{
-  res.send(tasks)
-});
-});
-
-/* Update task details */
-router.patch('/task_update',function(req,res,next){
-    let id=req.body._id;
-  
-    taskModel.findById(id).updateOne(req.body).then((task)=>{
-        console.log(task)
-    res.send(task)
-});
-});
-
-/* Delete task details */
-router.delete('/task_delete',function(req,res,next){
-  let id=req.body._id;
-  taskModel.findByIdAndDelete(id).then((tasks)=>{
-  res.send(tasks)
-});
-});
 
 module.exports = router;
