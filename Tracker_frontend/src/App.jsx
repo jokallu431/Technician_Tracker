@@ -10,6 +10,7 @@ import Pending_Task from "./components/Pending_Task";
 import Completed_Task from "./components/Completed_Task";
 import User_profile from "./components/User_profile";
 import Profile from "./components/profile";
+import User_list from "./components/User_list";
 // import Profile from "./components/profile";
 
 function App() {
@@ -32,6 +33,14 @@ function App() {
             <Route path="completed" element={<Completed_Task />} />
             <Route path="profile" element={<User_profile />} />
             <Route path="profile_success" element={<Profile />} />
+              <Route path="userlist" element={<User_list />}>
+                {/* <Route path="add" element={<User_profile />} />
+                <Route path="view" element={<Completed_Task />} />
+                <Route path="delete" element={<Profile />} /> */}
+              </Route>
+              <Route path="add" element={<User_profile />} />
+              <Route path="view" element={<Completed_Task />} />
+              <Route path="delete" element={<Profile />} />
           </Route>
         </Routes>
       </BrowserRouter>

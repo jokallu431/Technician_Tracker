@@ -127,7 +127,7 @@ const Sidebar = () => {
               </button>
               <button
                 className="collapse-item btn btn-outline-light"
-                onClick={() => navigate("/dashboard/pending")}
+                onClick={() => navigate("/dashboard/userlist")}
               >
                 User List
               </button>

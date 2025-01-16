@@ -18,7 +18,8 @@ name:String,
 email:String,
 password:String,
 phone:String,
-role:String
+role:String,
+branch:String
 });
 
 const userModel=mongoose.model('profiles',userSchema);
@@ -73,10 +74,10 @@ router.post('/profile',async function(req, res, next){
   let email=(req.body.email);
   let phone=(req.body.phone);
   let role=(req.body.role);
-
+  let branch=(req.body.branch);
   let securePassword= await encrypt(password);
     console.log("secure password :", securePassword)
-  userModel.create({name:name,email:email,password:securePassword,phone:phone,role:role}).then((newuser)=>{
+  userModel.create({name:name,email:email,password:securePassword,phone:phone,role:role,branch:branch}).then((newuser)=>{
   res.send(newuser)
   }).catch((e)=>{
   res.send('Error while creating User details')
@@ -129,6 +130,15 @@ router.get('/verify', function (req, res, next){
         "Data": user
       });
     });
+});
+
+/* Token Verification */
+router.get('/userlist', function (req, res, next){
+    
+  userModel.find().then((user)=>{
+    console.log(user);
+    res.send(user);
+  });
 });
 
 /* Update userv details */

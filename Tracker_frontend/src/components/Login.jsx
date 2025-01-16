@@ -5,7 +5,9 @@ function Login() {
         const emailRef = useRef();
         const passwordRef = useRef();
         const navigate = useNavigate();
-
+        const navigateTo = (path) => () => {
+            navigate(path);
+        };
         const handleSubmit = (e) => { 
         e.preventDefault();
 
@@ -35,8 +37,9 @@ function Login() {
         .then((response) => response.json())
         .then((result) => {
           console.log("Login successful:", result);
+          localStorage.setItem("token", result.token);
           // Navigate to another page on success
-          navigate("/dashboard");
+          navigateTo("/dashboard")();
         })
         .catch((error) => console.error("Error while logging", error));
     }

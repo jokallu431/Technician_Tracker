@@ -30,16 +30,16 @@ const requestOptions = {
     });
 }
 
-function loadVendors(resolve, reject) {
+function loadUserList(resolve, reject) {
 const requestOptions = {
     method: "GET",
     redirect: "follow"
   };
   
-  fetch("https://fakerapi.it/api/v2/users?_quantity=50&_gender=male", requestOptions)
+  fetch("http://localhost:4000/users/userlist", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      resolve(result.data);
+      resolve(result);
     })
     .catch(() => {
       reject(null);
@@ -62,4 +62,4 @@ const requestOptions = {
     });
 }
 
-export { loadUsers, loadUserDetails, loadVendors, loadVendorDetails };
+export { loadUsers, loadUserDetails, loadUserList, loadVendorDetails };
