@@ -12,7 +12,8 @@ import User_profile from "./components/User_profile";
 import Profile from "./components/profile";
 import Create_Branch from "./components/Create_Branch";
 import Create_Task from "./components/Create_Task";
-import Branch_list from "./components/Branch_List";
+import Technician_List from "./components/Technician_List";
+import Edit_Task from "./components/Edit_Task";
 // import Profile from "./components/profile";
 
 function App() {
@@ -34,7 +35,8 @@ function App() {
             <Route path="pending" element={<Pending_Task />} />
             <Route path="completed" element={<Completed_Task />} />
             <Route path="createTask" element={<Create_Task />} />
-            <Route path="Branchlist" element={<Branch_list/>} />
+            <Route path="editTask" element={<Edit_Task />} />
+            <Route path="technicianlist" element={<Technician_List/>} />
             <Route path="createBranch" element={<Create_Branch />} />
             <Route path="profile" element={<User_profile />} />
             <Route path="profile_success" element={<Profile />} />

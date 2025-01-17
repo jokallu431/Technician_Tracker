@@ -47,24 +47,6 @@ let result= await bcrypt.compare(password,hash);
 return result;
 }
 
-
-/* User Profile Creation */
-// router.post('/profile',async function(req, res, next){
-//   // let password=(req.body.password);
-//   let name=(req.body.name);
-//   // let email=(req.body.email);
-//   // let phone=(req.body.phone);
-//   // let role=(req.body.role);
-
-//   // let securePassword= await encrypt(password);
-//   // console.log("secure password :", securePassword)
-//   userModel.create({name:name}).then((newuser)=>{
-//   res.send(newuser)
-//   }).catch((e)=>{
-//   res.send('Error while creating User details')
-//   });
-// });
-
 /* User Profile Creation */
 router.post('/profile',async function(req, res, next){
   let password=req.body.password;

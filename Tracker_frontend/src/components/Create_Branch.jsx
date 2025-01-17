@@ -7,7 +7,6 @@ function Create_Branch(){
   const phoneRef = useRef();
   const branch_idRef = useRef();
   const addressRef = useRef();
-  const techniciansRef = useRef();
 //   const navigate = useNavigate();
 
   const handleSubmit = (e) => { 
@@ -91,26 +90,6 @@ function Create_Branch(){
                           </label>
                         </div>
                       </div>
-                      <div className="col-12">
-                        <div className="form-floating mb-3">
-                          <select
-                            className="form-control"
-                            name="technicians"
-                            ref={techniciansRef}
-                            required
-                          >
-                            <option value="" disabled>
-                              Select Technician
-                            </option>
-                            <option value="admin">Ardra Vijayan</option>
-                            <option value="admin">Anu A</option>
-                            <option value="technician">Joel Joby</option>
-                            <option value="technician">Monai Abraham</option>
-                            <option value="technician">Abil Mathew</option>
-                          </select>
-                          <label className="form-label">Role</label>
-                        </div>
-                      </div> 
                       <div className="col-12">
                         <div className="d-grid">
                           <button className="btn bsb-btn-xl btn-primary">

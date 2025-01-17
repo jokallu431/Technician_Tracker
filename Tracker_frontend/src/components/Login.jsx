@@ -15,11 +15,8 @@ function Login() {
         password: passwordRef.current.value,
         };
 
-
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-
-        
 
         const requestOptions = {
         method: "POST",
@@ -29,8 +26,7 @@ function Login() {
         };
         
         console.log("formdata",formData);
-        
-
+       
         fetch("http://localhost:4000/users/login", requestOptions)
         .then((response) => response.json())
         .then((result) => {

@@ -79,6 +79,12 @@ const Sidebar = () => {
               </button>
               <button
                 className="collapse-item btn btn-outline-light"
+                onClick={navigateTo("/dashboard/editTask")}
+              >
+                Edit Task
+              </button>
+              <button
+                className="collapse-item btn btn-outline-light"
                 onClick={navigateTo("/dashboard/pending")}
               >
                 Pending Task
@@ -91,13 +97,13 @@ const Sidebar = () => {
               </button>
               <button
                 className="collapse-item btn btn-outline-light"
-                onClick={() => navigate("/dashboard/pending")}
+                onClick={() => navigate("/dashboard/unassigned")}
               >
                 Unassigned Task
               </button>
               <button
                 className="collapse-item btn btn-outline-light"
-                onClick={() => navigate("/dashboard/pending")}
+                onClick={() => navigate("/dashboard/assigned")}
               >
                 Assigned Task
               </button>
@@ -133,7 +139,7 @@ const Sidebar = () => {
               </button>
               <button
                 className="collapse-item btn btn-outline-light"
-                onClick={navigateTo("/dashboard/Branchlist")}
+                onClick={navigateTo("/dashboard/technicianlist")}
               >
                Technician List
               </button>

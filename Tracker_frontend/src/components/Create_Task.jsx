@@ -1,24 +1,30 @@
-import { useRef } from "react";
+import { useRef,useState } from "react";
 import { useNavigate } from "react-router";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-function UserProfile() {
-  const nameRef = useRef();
+function  Create_Task(){
+
+  const task_idRef = useRef();
+  const titleRef = useRef();
+  const descriptionRef = useRef();
+  const addressRef = useRef();
   const phoneRef = useRef();
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const roleRef = useRef();
   const navigate = useNavigate();
+  const [date, setDate] = useState(new Date());
+  
+  // const date=Date()
+  // console.log(date)
 
   const handleSubmit = (e) => { 
     e.preventDefault();
 
-    // Collect form data using useRef
     const formData = {
-      name: nameRef.current.value,
-      phone: phoneRef.current.value,
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-      role: roleRef.current.value,
+      task_id: task_idRef.current.value,
+      title: titleRef.current.value,
+      description: descriptionRef.current.value,
+      address: addressRef.current.value,
+      phoneon: phoneRef.current.value
     };
 
     console.log("Submitting:", formData);
@@ -29,19 +35,18 @@ function UserProfile() {
       body: JSON.stringify(formData),
     };
       console.log("after stringify",formData);
-      
-    fetch("http://localhost:4000/users/profile", requestOptions)
+      fetch("http://localhost:4000/task/task_create", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log("Profile created successfully:", result);
-        // Navigate to another page on success
-        
-        navigate("/dashboard");
-      })
-      .catch((error) => console.error("Error creating profile:", error));
-  };
+      console.log("Task created successfully:", result);
+    // Navigate to another page on success
+    
+    navigate("/login");
+  })
+  .catch((error) => console.error("Error creating profile:", error));
 
-  return (
+  }
+return(
     <>
       <section className="bg-light p-3 p-md-4 p-xl-5">
         <div className="container">
@@ -54,7 +59,7 @@ function UserProfile() {
                       <div className="mb-5">
                         <h4 className="text-center">
                           {" "}
-                          Lets Create a Profile!
+                          Create a Task
                         </h4>
                       </div>
                     </div>
@@ -66,79 +71,90 @@ function UserProfile() {
                           <input
                             type="text"
                             className="form-control"
-                            id="name"
+                            id="task_id"
                             placeholder="Enter your full name"
-                            ref={nameRef}
+                            ref={task_idRef}
                             required
                           />
-                          <label htmlFor="name" className="form-label">
-                            Name
+                          <label htmlFor="task_id" className="form-label">
+                          Task_Id
                           </label>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="form-floating mb-3">
                           <input
+                            type="title"
+                            className="form-control"
+                            id="title"
+                            placeholder="Title"
+                            ref={titleRef}
+                          />
+                          <label htmlFor="title" className="form-label">
+                           Title
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-12">
+                        <div className="form-floating mb-3">
+                          <textarea
+                            type="description"
+                            className="form-control"
+                            id="description"
+                            placeholder="name@example.com"
+                            ref={descriptionRef}
+                          />
+                          <label htmlFor="description" className="form-label">
+                            Description
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-12">
+                        <div className="form-floating mb-3">
+                          <textarea
+                            type="address"
+                            className="form-control"
+                            id="address"
+                            placeholder="Address"
+                            ref={addressRef}
+                          />
+                          <label htmlFor="addressRef" className="form-label">
+                            Address
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-12">
+                        <div className="form-floating mb-3">
+                          <textarea
                             type="phone"
                             className="form-control"
                             id="phone"
-                            placeholder="Enter your phone number"
+                            placeholder="Phone"
                             ref={phoneRef}
                           />
-                          <label htmlFor="phone" className="form-label">
-                            Phone No.
+                          <label htmlFor="addressRef" className="form-label">
+                            Phone
                           </label>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="form-floating mb-3">
                           <input
-                            type="email"
+                            type="available_Date"
                             className="form-control"
-                            id="email"
-                            placeholder="name@example.com"
-                            ref={emailRef}
+                            id="available_Date"
+                            placeholder="Available Date"
+                            ref={date}
                           />
-                          <label htmlFor="email" className="form-label">
-                            Email
+                          <label htmlFor="available_Date" className="form-label">
+                          <DatePicker selected={date} onChange={(date) => setDate(date)} />                        
                           </label>
                         </div>
                       </div>
-                      <div className="col-12">
-                        <div className="form-floating mb-3">
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="password"
-                            placeholder="Password"
-                            ref={passwordRef}
-                          />
-                          <label htmlFor="password" className="form-label">
-                            Password
-                          </label>
-                        </div>
-                      </div>
-                      <div className="col-12">
-                        <div className="form-floating mb-3">
-                          <select
-                            className="form-control"
-                            name="role"
-                            ref={roleRef}
-                            required
-                          >
-                            <option value="" disabled>
-                              Select Role
-                            </option>
-                            <option value="admin">Admin</option>
-                            <option value="technician">Technician</option>
-                          </select>
-                          <label className="form-label">Role</label>
-                        </div>
-                      </div> 
                       <div className="col-12">
                         <div className="d-grid">
                           <button className="btn bsb-btn-xl btn-primary">
-                            Create Profile
+                            Create Task
                           </button>
                         </div>
                       </div>
@@ -151,7 +167,8 @@ function UserProfile() {
         </div>
       </section>
     </>
-  );
-}
+);
+};
 
-export default UserProfile;
+
+export default Create_Task;
