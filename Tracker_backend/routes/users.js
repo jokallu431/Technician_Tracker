@@ -125,10 +125,7 @@ router.get('/verify', function (req, res, next){
     userModel.findById(token._id).then((user)=>{
       console.log(user);
       
-      res.send({
-        "Message":'User_List',
-        "Data": user
-      });
+      res.send(user);
     });
 });
 
