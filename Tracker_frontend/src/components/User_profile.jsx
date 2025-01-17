@@ -38,7 +38,7 @@ function UserProfile() {
         console.log("Profile created successfully:", result);
         // Navigate to another page on success
         
-        navigate("/login");
+        navigate("/dashboard");
       })
       .catch((error) => console.error("Error creating profile:", error));
   };

@@ -11,6 +11,10 @@ import Completed_Task from "./components/Completed_Task";
 import User_profile from "./components/User_profile";
 import Profile from "./components/profile";
 import User_list from "./components/User_list";
+import Create_Branch from "./components/Create_Branch";
+import Create_Task from "./components/Create_Task";
+import Technician_List from "./components/Technician_List";
+import Edit_Task from "./components/Edit_Task";
 // import Profile from "./components/profile";
 
 function App() {
@@ -31,6 +35,10 @@ function App() {
             <Route index element={<Tech_Dashboard />} />
             <Route path="pending" element={<Pending_Task />} />
             <Route path="completed" element={<Completed_Task />} />
+            <Route path="createTask" element={<Create_Task />} />
+            <Route path="editTask" element={<Edit_Task />} />
+            <Route path="technicianlist" element={<Technician_List/>} />
+            <Route path="createBranch" element={<Create_Branch />} />
             <Route path="profile" element={<User_profile />} />
             <Route path="profile_success" element={<Profile />} />
               <Route path="userlist" element={<User_list />}>
