@@ -1,6 +1,26 @@
 import React from 'react'
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
+import { verifyUser } from './api';
 const Topbar = () => {
+    const [userDetails, setUserDetails] = useState([]);
+    const userToken = localStorage.getItem("token");
+    console.log("userToken", userToken);
+    
+    useEffect(() => {
+        verifyUser(
+            userToken,
+        (result) => {
+            console.log("result", result);
+            
+          setUserDetails(result);
+        },
+        (error) => {
+          console.log("error", error);
+        }
+      );
+    }, []);
+  
   return (
     <>
          {/* <!-- Topbar --> */}
@@ -175,7 +195,7 @@ const Topbar = () => {
     <li className="nav-item dropdown no-arrow">
         <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span className="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+            <span className="mr-2 d-none d-lg-inline text-gray-600 small">{userDetails.name}</span>
             <img className="img-profile rounded-circle"
                 src="img/undraw_profile.svg"/>
         </a>

@@ -119,7 +119,14 @@ router.get('/userlist', function (req, res, next){
     res.send(user);
   });
 });
-
+/* Token Verification */
+router.get('/edit', function (req, res, next){
+    let user= verifyToken(req.headers.authorization.split(" ")[1]);
+  userModel.findById(user._id).then((user)=>{
+    console.log(user);
+    res.send(user);
+  });
+});
 /* Update userv details */
 router.patch('/user_update',function(req,res,next){
   let id=req.body._id;

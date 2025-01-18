@@ -30,11 +30,33 @@ const taskModel=mongoose.model('tasks',taskSchema);
   
   /* Read task details */
   router.get('/task_get',function(req,res,next){
+    
     taskModel.find().then((tasks)=>{
+      console.log(tasks);
+      
     res.send(tasks)
   });
   });
   
+
+    /* Read task details */
+    router.get('/task_Unassigned',function(req,res,next){
+
+      const { status } = req.query; // Get the fields to select from the query parameters
+    
+    // If fields are provided, split them into an array; otherwise, select all fields
+      const selectFields = status ? status.split(',').join(' ') : '';
+  
+      console.log(selectFields);
+      
+  
+      taskModel.find().select(selectFields).then((tasks)=>{
+        console.log(tasks);
+        
+      res.send(tasks)
+    });
+    });
+
   /* Update task details */
   router.patch('/task_update',function(req,res,next){
       let id=req.body._id;
