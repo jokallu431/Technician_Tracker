@@ -116,7 +116,7 @@ router.get('/verify', function (req, res, next){
 /* Update user details */
 router.patch('/user_update',function(req,res,next){
   let id=req.body._id;
-  userModel.findById(id).updateOne(req.body).then((task)=>{
+  userModel.findById(id).updateOne(req.body).then((user)=>{
       console.log(user)
   res.send(user)
 });

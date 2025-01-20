@@ -1,6 +1,5 @@
-import { useRef,useState } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function  Create_Task(){
@@ -10,11 +9,10 @@ function  Create_Task(){
   const descriptionRef = useRef();
   const addressRef = useRef();
   const phoneRef = useRef();
+  const assignedonRef = useRef();
   const navigate = useNavigate();
-  const [date, setDate] = useState(new Date());
   
-  // const date=Date()
-  // console.log(date)
+  // const [date, setDate] = useState(new Date());
 
   const handleSubmit = (e) => { 
     e.preventDefault();
@@ -24,7 +22,8 @@ function  Create_Task(){
       title: titleRef.current.value,
       description: descriptionRef.current.value,
       address: addressRef.current.value,
-      phoneon: phoneRef.current.value
+      phone: phoneRef.current.value,
+      assignedon: assignedonRef.current.value
     };
 
     console.log("Submitting:", formData);
@@ -41,7 +40,7 @@ function  Create_Task(){
       console.log("Task created successfully:", result);
     // Navigate to another page on success
     
-    navigate("/login");
+    navigate("/dashboard");
   })
   .catch((error) => console.error("Error creating profile:", error));
 
@@ -138,19 +137,15 @@ return(
                         </div>
                       </div>
                       <div className="col-12">
-                        <div className="form-floating mb-3">
-                          <input
-                            type="available_Date"
-                            className="form-control"
-                            id="available_Date"
-                            placeholder="Available Date"
-                            ref={date}
-                          />
-                          <label htmlFor="available_Date" className="form-label">
-                          <DatePicker selected={date} onChange={(date) => setDate(date)} />                        
-                          </label>
+                        <div className="form-floating mb-3">   
+                        <input
+                            type="date" 
+                            className="form-control"  
+                            ref={assignedonRef}                
+                             />
                         </div>
                       </div>
+                      <br/>
                       <div className="col-12">
                         <div className="d-grid">
                           <button className="btn bsb-btn-xl btn-primary">

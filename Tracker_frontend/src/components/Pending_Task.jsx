@@ -76,7 +76,7 @@ const Pending_Task = () => {
             <div className="mb-3">
               <h5 className="card-title">
                 Pending List{" "}
-                <span className="text-muted fw-normal ms-2">(1)</span>
+                <span className="text-muted fw-normal ms-2">({usersList.length})</span>
               </h5>
             </div>
           </div>

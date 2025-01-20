@@ -14,9 +14,10 @@ const taskSchema = new Schema({
     title:String,
     description:Object,
     address:Object,
-    assigned_on:String,
     status:String,
-    assigned_to:String
+    phone:String,
+    assignedon:String
+
     });
     
 const taskModel=mongoose.model('tasks',taskSchema);
