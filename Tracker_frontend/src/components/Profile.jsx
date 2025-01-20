@@ -68,7 +68,7 @@ function Profile() {
                       <div className="mb-5">
                         <h4 className="text-center">
                           {" "}
-                          Lets Create a Profile!
+                          Let's view a Profile!
                         </h4>
                       </div>
                     </div>

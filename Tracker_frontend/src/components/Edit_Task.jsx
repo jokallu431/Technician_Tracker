@@ -85,6 +85,7 @@ return(
                             className="form-control"
                             id="task_id"
                             placeholder="Enter your full name"
+                            value={task.task_id}
                             ref={task_idRef}
                             required
                           />
@@ -100,6 +101,7 @@ return(
                             className="form-control"
                             id="title"
                             placeholder="Title"
+                            value={task.title}
                             ref={titleRef}
                           />
                           <label htmlFor="title" className="form-label">
@@ -113,7 +115,7 @@ return(
                             type="description"
                             className="form-control"
                             id="description"
-                            placeholder="name@example.com"
+                            value={task.description}
                             ref={descriptionRef}
                           />
                           <label htmlFor="description" className="form-label">
@@ -128,6 +130,7 @@ return(
                             className="form-control"
                             id="address"
                             placeholder="Address"
+                            value={task.address}
                             ref={addressRef}
                           />
                           <label htmlFor="addressRef" className="form-label">
@@ -142,6 +145,7 @@ return(
                             className="form-control"
                             id="phone"
                             placeholder="Phone"
+                            value={task.phone}
                             ref={phoneRef}
                           />
                           <label htmlFor="addressRef" className="form-label">
@@ -156,6 +160,7 @@ return(
                             className="form-control"
                             id="available_Date"
                             placeholder="Available Date"
+                            value={task.assigned_on}
                             ref={dateRef}
                           />
                           <label htmlFor="available_Date" className="form-label">

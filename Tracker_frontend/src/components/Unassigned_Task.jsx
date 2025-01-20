@@ -1,7 +1,7 @@
 import React from 'react'
 import "../css/all_tables.css";
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
+import { Link} from 'react-router';
 import { EyeIcon } from './Icon';
 import {loadTask} from './api';
 
@@ -10,10 +10,8 @@ const Unassigned_Task = () => {
     
     useEffect(() => {
         loadTask((data) => {
-          
-          console.log("task after",data);
-            let rows = data.map((task) => {
-                console.log("task in loadTask",task.task_id);
+               
+           let rows = data.map((task) => {
                 
                 return generateRow(task);
             });
@@ -39,7 +37,7 @@ const Unassigned_Task = () => {
                 <td>
                   <ul className="list-inline mb-0">
                     <li className="list-inline-item">
-                    <Link to={"./add"}
+                    <Link to={"edit"}
                       
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
@@ -50,11 +48,10 @@ const Unassigned_Task = () => {
                     </Link>
                     </li>
                     <li className="list-inline-item">
-                    <Link to={'delete'}
-                      
+                    <Link to={`view/${task._id}`}
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
-                      title="Delete"
+                      title="View"
                       className="px-2 text-primary"
                     >
                     <EyeIcon/>
@@ -74,7 +71,7 @@ const Unassigned_Task = () => {
             <div className="mb-3">
               <h5 className="card-title">
                 Unassigned List{" "}
-                <span className="text-muted fw-normal ms-2">(1)</span>
+                <span className="text-muted fw-normal ms-2">({taskList.length})</span>
               </h5>
             </div>
           </div>

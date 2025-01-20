@@ -5,18 +5,14 @@ import { verifyUser } from './api';
 const Topbar = () => {
     const [userDetails, setUserDetails] = useState([]);
     const userToken = localStorage.getItem("token");
-    console.log("userToken", userToken);
-    
     useEffect(() => {
         verifyUser(
             userToken,
         (result) => {
-            console.log("result", result);
-            
           setUserDetails(result);
         },
-        (error) => {
-          console.log("error", error);
+        () => {
+            setUserDetails(null);
         }
       );
     }, []);
@@ -193,9 +189,9 @@ const Topbar = () => {
 
     {/* <!-- Nav Item - User Information --> */}
     <li className="nav-item dropdown no-arrow">
-        <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+        <a className="nav-link dropdown-toggle" id="userDropdown" role="button"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span className="mr-2 d-none d-lg-inline text-gray-600 small">{userDetails.name}</span>
+            <p className="mr-2 d-none d-lg-inline text-gray-600 small">{userDetails.name}</p>
             <img className="img-profile rounded-circle"
                 src="img/undraw_profile.svg"/>
         </a>

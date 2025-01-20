@@ -31,16 +31,16 @@ function loadTask(resolve, reject) {
       });
 }
 
-function loadTaskDetails(id, resolve, reject) {
+function loadTaskDetails(_id, resolve, reject) {
 const requestOptions = {
     method: "GET",
     redirect: "follow"
   };
   
-  fetch("https://fakerapi.it/api/v2/users?_quantity=1&_gender=male", requestOptions)
+  fetch("", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      resolve(result.data);
+      resolve(result);
     })
     .catch(() => {
       reject(null);
@@ -72,7 +72,7 @@ const requestOptions = {
   fetch("http://localhost:4000/users/edit/`${_id}`", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      resolve(result.data);
+      resolve(result);
     })
     .catch(() => {
       reject(null);
@@ -80,9 +80,6 @@ const requestOptions = {
 }
 
 function verifyUser(token, resolve, reject) {
- 
-
-  console.log(`Bearer ${token}`);
   const myHeaders = new Headers();
   
   myHeaders.append("Authorization", `Bearer ${token}`);

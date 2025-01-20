@@ -64,7 +64,7 @@
 //   export default sidebarData;
 
 const sidebarData = {
-    admin: [
+    Admin: [
         {
                   title: "Admin Dashboard",
                   icon: "fas fa-fw fa-tachometer-alt",
@@ -76,6 +76,10 @@ const sidebarData = {
                   icon: "fas fa-fw fa-wrench",
                   link: "#",
                   subMenu: [
+                    {
+                      title: "Create Task",
+                      link: "createTask",
+                    },
                     {
                       title: "Pending Task",
                       link: "pending",
@@ -91,6 +95,21 @@ const sidebarData = {
                     {
                       title: "Assigned Task",
                       link: "/dashboard/assigned",
+                    },
+                  ],
+                },
+                {
+                  title: "Branch",
+                  icon: "fas fa-fw fa-building",
+                  link: "#",
+                  subMenu: [
+                    {
+                      title: "Create Branch",
+                      link: "/dashboard/createBranch",
+                    },
+                    {
+                      title: "Technician List",
+                      link: "/dashboard/technicianlist",
                     },
                   ],
                 },
@@ -115,17 +134,13 @@ const sidebarData = {
                   link: "#",
                   subMenu: [
                     {
-                      title: "Login",
-                      link: "/login",
-                    },
-                    {
                       title: "Forgot Password?",
                       link: "/forgetpassword",
                     },
                   ],
                 },
     ],
-    technician: [
+    Technician: [
       {
         title: "Technician Dashboard",
         icon: "fas fa-fw fa-home",
@@ -133,12 +148,43 @@ const sidebarData = {
         subMenu: [],
       },
       {
-        title: "Tasks",
-        icon: "fas fa-fw fa-tasks",
+        title: "Task",
+        icon: "fas fa-fw fa-wrench",
         link: "#",
         subMenu: [
-          { title: "My Tasks", link: "/dashboard/my-tasks" },
-          { title: "Completed Tasks", link: "/dashboard/completed-tasks" },
+          {
+            title: "Pending Task",
+            link: "pending",
+          },
+          {
+            title: "Completed Task",
+            link: "/dashboard/completed",
+          },
+          {
+            title: "Unassigned Task",
+            link: "/dashboard/unassigned",
+          },
+          {
+            title: "Assigned Task",
+            link: "/dashboard/assigned",
+          },
+        ],
+      },
+      {
+        title: "Profile",
+        icon: "fas fa-fw fa-user",
+        link: "/dashboard/getprofile",
+        subMenu: [],
+      },
+      {
+        title: "Pages",
+        icon: "fas fa-fw fa-folder",
+        link: "#",
+        subMenu: [
+          {
+            title: "Forgot Password?",
+            link: "/forgetpassword",
+          },
         ],
       },
     ],

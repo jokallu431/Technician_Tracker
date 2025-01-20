@@ -272,7 +272,7 @@ const User_list = () => {
             </li>
             <li className="list-inline-item">
               <Link
-                to="view" // Link to the view route
+                to={`../view/${user._id}`}// Link to the view route
                 data-bs-toggle="tooltip"
                 data-bs-placement="top"
                 title="View"

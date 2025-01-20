@@ -129,8 +129,8 @@ router.get('/edit', function (req, res, next){
 });
 /* Update userv details */
 router.patch('/user_update',function(req,res,next){
-  let id=req.body._id;
-  userModel.findById(id).updateOne(req.body).then((task)=>{
+  let user= verifyToken(req.headers.authorization.split(" ")[1]);
+  userModel.findById(user._id).updateOne(req.body).then((user)=>{
       console.log(user)
   res.send(user)
 });
@@ -138,8 +138,8 @@ router.patch('/user_update',function(req,res,next){
 
 /* Delete user details */
 router.delete('/user_delete',function(req,res,next){
-  let id=req.body._id;
-  userModel.findByIdAndDelete(id).then((users)=>{
+  let user= verifyToken(req.headers.authorization.split(" ")[1]);
+  userModel.findByIdAndDelete(user._id).then((users)=>{
   res.send(users)
 });
 });

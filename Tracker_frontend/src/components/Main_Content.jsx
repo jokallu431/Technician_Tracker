@@ -6,7 +6,7 @@ import { Outlet ,useLocation} from "react-router";
 import { useState } from "react";
 
 const Main_Content = () => {
-  const [showOutlet, setShowOutlet] = useState(false);
+  
   const location = useLocation(); 
   const isDashboard = location.pathname.includes("dashboard/");
   return (

@@ -6,6 +6,12 @@ const mongoose = require('mongoose')
 mongoose.connect('mongodb://127.0.0.1:27017/Tech_Trace')
   .then(() => console.log('DB Connected for Task!'));
 
+  /* Token Verification */
+  function verifyToken(token)
+  {
+    return jwt.verify(token,'TECH_TRACE');
+  }
+
 const Schema=mongoose.Schema;
 
 
@@ -16,7 +22,8 @@ const taskSchema = new Schema({
     address:Object,
     assigned_on:String,
     status:String,
-    assigned_to:String
+    assigned_to:String,
+    created_by:String
     });
     
 const taskModel=mongoose.model('tasks',taskSchema);
@@ -58,15 +65,22 @@ const taskModel=mongoose.model('tasks',taskSchema);
     });
 
   /* Update task details */
+  // router.patch('/task_update',function(req,res,next){
+  //   let user= verifyToken(req.headers.authorization.split(" ")[1]);
+
+  //     taskModel.findById(user._id).updateOne(req.body).then((task)=>{
+  //         console.log(task)
+  //     res.send(task)
+  // });
+  // });
   router.patch('/task_update',function(req,res,next){
-      let id=req.body._id;
-    
-      taskModel.findById(id).updateOne(req.body).then((task)=>{
+    let user= verifyToken(req.headers.authorization.split(" ")[1]);
+
+      taskModel.findById(user._id).updateOne(req.body).then((task)=>{
           console.log(task)
       res.send(task)
   });
   });
-  
   /* Delete task details */
   router.delete('/task_delete',function(req,res,next){
     let id=req.body._id;
