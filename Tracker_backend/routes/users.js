@@ -18,7 +18,8 @@ name:String,
 email:String,
 password:String,
 phone:String,
-role:String
+role:String,
+branch:String
 });
 
 const userModel=mongoose.model('profiles',userSchema);
@@ -51,14 +52,14 @@ return result;
 router.post('/profile',async function(req, res, next){
   let password=req.body.password;
   let name=req.body.name;
-  let email=req.body.email;
-  let phone=req.body.phone;
-  let role=req.body.role;
-  
-
+  console.log("name :", name)
+  let email=(req.body.email);
+  let phone=(req.body.phone);
+  let role=(req.body.role);
+  let branch=(req.body.branch);
   let securePassword= await encrypt(password);
-  console.log("secure password :", securePassword)
-  userModel.create({name:name,email:email,password:securePassword,phone:phone,role:role}).then((newuser)=>{
+    console.log("secure password :", securePassword)
+  userModel.create({name:name,email:email,password:securePassword,phone:phone,role:role,branch:branch}).then((newuser)=>{
   res.send(newuser)
   }).catch((e)=>{
   res.send('Error while creating User details')
@@ -106,17 +107,30 @@ router.get('/verify', function (req, res, next){
     userModel.findById(token._id).then((user)=>{
       console.log(user);
       
-      res.send({
-        "Message":'User_List',
-        "Data": user
-      });
+      res.send(user);
     });
 });
 
-/* Update user details */
+/* Token Verification */
+router.get('/userlist', function (req, res, next){
+    
+  userModel.find().then((user)=>{
+    console.log(user);
+    res.send(user);
+  });
+});
+/* Token Verification */
+router.get('/edit', function (req, res, next){
+    let user= verifyToken(req.headers.authorization.split(" ")[1]);
+  userModel.findById(user._id).then((user)=>{
+    console.log(user);
+    res.send(user);
+  });
+});
+/* Update userv details */
 router.patch('/user_update',function(req,res,next){
-  let id=req.body._id;
-  userModel.findById(id).updateOne(req.body).then((task)=>{
+  let user= verifyToken(req.headers.authorization.split(" ")[1]);
+  userModel.findById(user._id).updateOne(req.body).then((user)=>{
       console.log(user)
   res.send(user)
 });
@@ -124,8 +138,8 @@ router.patch('/user_update',function(req,res,next){
 
 /* Delete user details */
 router.delete('/user_delete',function(req,res,next){
-  let id=req.body._id;
-  userModel.findByIdAndDelete(id).then((users)=>{
+  let user= verifyToken(req.headers.authorization.split(" ")[1]);
+  userModel.findByIdAndDelete(user._id).then((users)=>{
   res.send(users)
 });
 });

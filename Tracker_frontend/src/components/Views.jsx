@@ -1,7 +1,23 @@
-import { useRef } from "react";
-import { useNavigate } from "react-router";
+import { useRef,useState,useEffect } from "react";
+import { useNavigate,useParams} from "react-router";
+import { loadUsersDetails } from "./api";
 
-function UserProfile() {
+
+function Views() {
+
+  let {_id } = useParams();
+  let [user, setUser] = useState(null);
+  console.log(user);
+    
+        useEffect(() => {
+            loadUsersDetails(_id, (data) => {
+              
+                setUser(data[0]);
+            },() => {
+                setUser(null);
+            });
+        }, [_id]);
+
   const nameRef = useRef();
   const phoneRef = useRef();
   const emailRef = useRef();
@@ -33,7 +49,7 @@ console.log("inside user profile");
     };
       console.log("after stringify",formData);
       
-    fetch("http://localhost:4000/users/profile", requestOptions)
+    fetch("http://localhost:4000/users/profile/"+`${user._id}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log("Profile created successfully:", result);
@@ -190,28 +206,13 @@ console.log("inside user profile");
               <div className="row gy-2">
                 <div className="col-12 col-md-6">
                   <div className="form-floating mb-3">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="name"
-                      placeholder="Enter your full name"
-                      ref={nameRef}
-                      required
-                    />
                     <label htmlFor="name" className="form-label">
-                      Name
+                      Name {user.name}
                     </label>
                   </div>
                 </div>
                 <div className="col-12 col-md-6">
                   <div className="form-floating mb-3">
-                    <input
-                      type="phone"
-                      className="form-control"
-                      id="phone"
-                      placeholder="Enter your phone number"
-                      ref={phoneRef}
-                    />
                     <label htmlFor="phone" className="form-label">
                       Phone No.
                     </label>
@@ -219,13 +220,6 @@ console.log("inside user profile");
                 </div>
                 <div className="col-12 col-md-6">
                   <div className="form-floating mb-3">
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="email"
-                      placeholder="name@example.com"
-                      ref={emailRef}
-                    />
                     <label htmlFor="email" className="form-label">
                       Email
                     </label>
@@ -239,6 +233,7 @@ console.log("inside user profile");
                       id="password"
                       placeholder="Password"
                       ref={passwordRef}
+                        value={user.password}
                     />
                     <label htmlFor="password" className="form-label">
                       Password
@@ -251,6 +246,7 @@ console.log("inside user profile");
                       className="form-control"
                       name="branch"
                       ref={branchesRef}
+                      value={user.branch}
                       required
                     >
                       <option value="" disabled>
@@ -279,13 +275,6 @@ console.log("inside user profile");
                     <label className="form-label">Role</label>
                   </div>
                 </div>
-                <div className="col-12">
-                  <div className="d-grid">
-                    <button className="btn bsb-btn-xl btn-primary">
-                      Create Profile
-                    </button>
-                  </div>
-                </div>
               </div>
             </form>
           </div>
@@ -299,4 +288,4 @@ console.log("inside user profile");
   );
 }
 
-export default UserProfile;
+export default Views;

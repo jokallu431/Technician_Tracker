@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef,useState} from "react";
 import { useNavigate } from "react-router";
 
 function Profile() {
@@ -8,6 +8,20 @@ function Profile() {
   const passwordRef = useRef();
   const roleRef = useRef();
   const navigate = useNavigate();
+
+  let [usersList, setUsersList] = useState([]);
+    
+  useEffect(() => {
+      loadUserList((data) => {
+          let rows = data.map((user) => {
+              console.log(user);
+              return generateRow(user);
+          });
+          setUsersList(rows);
+      },() => {
+          setUsersList([]);
+      });
+  }, []);
 
   const handleSubmit = (e) => { 
     e.preventDefault();
@@ -54,7 +68,7 @@ function Profile() {
                       <div className="mb-5">
                         <h4 className="text-center">
                           {" "}
-                          Lets Create a Profile!
+                          Let's view a Profile!
                         </h4>
                       </div>
                     </div>
@@ -68,6 +82,7 @@ function Profile() {
                             className="form-control"
                             id="name"
                             placeholder="Enter your full name"
+                            value={name}
                             ref={nameRef}
                             required
                           />
