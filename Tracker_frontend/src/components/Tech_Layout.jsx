@@ -1,26 +1,35 @@
 import React from "react";
-import { Outlet, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import Sidebar from "./Sidebar";
 import Main_Content from "./Main_Content";
-import Topbar from "./Topbar";
-import Page_heading from "./Page_heading";
-import Card_Tiles from "./Card_Tiles";
+import sidebarData from "./Data";
+import { useEffect,useState } from "react";
 
 const Tech_Layout = () => {
     const navigate = useNavigate();
+    let [roleSpecificSidebarData, setRoleSpecificSidebarData] = useState([]);
+    const [role, setRole] = useState("Admin");
+    
+    useEffect(() => {
+      setRole(localStorage.getItem("role"));
+    },[]);
+    
+useEffect(() => {
+  setRoleSpecificSidebarData(role == "Admin" ? sidebarData.Admin : sidebarData.Technician); 
+},[role]);
 
   const handleLogout = () => {
     // Perform any cleanup if necessary
+    localStorage.clear();
     navigate('/login');
   };
   return (
     <>
       <div id="wrapper">
-        <Sidebar />
+        <Sidebar sidebarData={roleSpecificSidebarData} />
         {/* <!-- Content Wrapper --> */}
         <div id="content-wrapper" className="d-flex flex-column">
           <Main_Content/>
-          
         </div>
         {/* <!-- End of Content Wrapper --> */}
       </div>

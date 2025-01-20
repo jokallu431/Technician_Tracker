@@ -1,7 +1,21 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router";
+import { loadUsersDetails } from "./api";
+
 
 function UserProfile() {
+
+    let { _id } = useParams();
+        let [user, setUser] = useState(null);
+    
+        useEffect(() => {
+            loadUsersDetails(_id, (data) => {
+                setUser(data[0]);
+            },() => {
+                setUser(null);
+            });
+        }, [id]);
+
   const nameRef = useRef();
   const phoneRef = useRef();
   const emailRef = useRef();
@@ -33,7 +47,7 @@ console.log("inside user profile");
     };
       console.log("after stringify",formData);
       
-    fetch("http://localhost:4000/users/profile", requestOptions)
+    fetch("http://localhost:4000/users/profile/"+`${user._id}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log("Profile created successfully:", result);
@@ -195,6 +209,7 @@ console.log("inside user profile");
                       className="form-control"
                       id="name"
                       placeholder="Enter your full name"
+                      value={user.name}
                       ref={nameRef}
                       required
                     />
@@ -211,6 +226,7 @@ console.log("inside user profile");
                       id="phone"
                       placeholder="Enter your phone number"
                       ref={phoneRef}
+                      value={user.phone}
                     />
                     <label htmlFor="phone" className="form-label">
                       Phone No.
@@ -225,6 +241,7 @@ console.log("inside user profile");
                       id="email"
                       placeholder="name@example.com"
                       ref={emailRef}
+                        value={user.email}
                     />
                     <label htmlFor="email" className="form-label">
                       Email
@@ -239,6 +256,7 @@ console.log("inside user profile");
                       id="password"
                       placeholder="Password"
                       ref={passwordRef}
+                        value={user.password}
                     />
                     <label htmlFor="password" className="form-label">
                       Password
@@ -251,6 +269,7 @@ console.log("inside user profile");
                       className="form-control"
                       name="branch"
                       ref={branchesRef}
+                      value={user.branch}
                       required
                     >
                       <option value="" disabled>

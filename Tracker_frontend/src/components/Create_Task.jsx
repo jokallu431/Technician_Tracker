@@ -1,7 +1,6 @@
 import { useRef,useState } from "react";
 import { useNavigate } from "react-router";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+
 
 function  Create_Task(){
 
@@ -10,8 +9,8 @@ function  Create_Task(){
   const descriptionRef = useRef();
   const addressRef = useRef();
   const phoneRef = useRef();
+  const dateRef = useRef();
   const navigate = useNavigate();
-  const [date, setDate] = useState(new Date());
   
   // const date=Date()
   // console.log(date)
@@ -24,7 +23,9 @@ function  Create_Task(){
       title: titleRef.current.value,
       description: descriptionRef.current.value,
       address: addressRef.current.value,
-      phoneon: phoneRef.current.value
+      phoneon: phoneRef.current.value,
+      assigned_on: dateRef.current.value,
+      status: "unassigned",
     };
 
     console.log("Submitting:", formData);
@@ -41,7 +42,7 @@ function  Create_Task(){
       console.log("Task created successfully:", result);
     // Navigate to another page on success
     
-    navigate("/login");
+    navigate("/dashboard");
   })
   .catch((error) => console.error("Error creating profile:", error));
 
@@ -140,14 +141,13 @@ return(
                       <div className="col-12">
                         <div className="form-floating mb-3">
                           <input
-                            type="available_Date"
+                            type="date"
                             className="form-control"
                             id="available_Date"
                             placeholder="Available Date"
-                            ref={date}
+                            ref={dateRef}
                           />
                           <label htmlFor="available_Date" className="form-label">
-                          <DatePicker selected={date} onChange={(date) => setDate(date)} />                        
                           </label>
                         </div>
                       </div>
