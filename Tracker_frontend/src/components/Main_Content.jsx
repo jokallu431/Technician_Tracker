@@ -1,11 +1,14 @@
 // import React from "react";
 import Topbar from "./Topbar";
 import Card_Tiles from "./Card_Tiles";
-import Page_heading from "./Page_heading";
 import Footer from "./Footer";
-import { Outlet } from "react-router";
+import { Outlet ,useLocation} from "react-router";
+import { useState } from "react";
 
 const Main_Content = () => {
+  
+  const location = useLocation(); 
+  const isDashboard = location.pathname.includes("dashboard/");
   return (
     <>
       {/* <!-- Main Content --> */}
@@ -14,9 +17,9 @@ const Main_Content = () => {
 
         {/* <!-- Begin Page Content --> */}
         <div className="container-fluid">
-          <Page_heading />
-          <Card_Tiles />
-          <Outlet/>
+           {/* Conditional Rendering */}
+          {isDashboard ? <Outlet/>:<Card_Tiles /> }
+
           <Footer />
           {/* <!-- Content Row --> */}
         </div>

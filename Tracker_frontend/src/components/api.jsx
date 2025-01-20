@@ -14,52 +14,90 @@ function loadUsers(resolve, reject) {
       });
 }
 
-function loadUserDetails(id, resolve, reject) {
+function loadTask(resolve, reject) {
+  const requestOptions = {
+      method: "GET",
+      redirect: "follow"
+    };
+    
+    fetch("http://localhost:4000/task/task_get", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        resolve(result);
+      })
+      .catch((e) => {
+        console.log(e);
+        reject(null);
+      });
+}
+
+function loadTaskDetails(_id, resolve, reject) {
 const requestOptions = {
     method: "GET",
     redirect: "follow"
   };
   
-  fetch("https://fakerapi.it/api/v2/users?_quantity=1&_gender=male", requestOptions)
+  fetch("", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      resolve(result.data);
+      resolve(result);
     })
     .catch(() => {
       reject(null);
     });
 }
 
-function loadVendors(resolve, reject) {
+function loadUserList(resolve, reject) {
 const requestOptions = {
     method: "GET",
     redirect: "follow"
   };
   
-  fetch("https://fakerapi.it/api/v2/users?_quantity=50&_gender=male", requestOptions)
+  fetch("http://localhost:4000/users/userlist", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      resolve(result.data);
+      resolve(result);
     })
     .catch(() => {
       reject(null);
     });
 }
 
-function loadVendorDetails(id, resolve, reject) {
+function loadUsersDetails(_id, resolve, reject) {
 const requestOptions = {
     method: "GET",
     redirect: "follow"
   };
   
-  fetch("https://fakerapi.it/api/v2/users?_quantity=1&_gender=male", requestOptions)
+  fetch("http://localhost:4000/users/edit/`${_id}`", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      resolve(result.data);
+      resolve(result);
     })
     .catch(() => {
       reject(null);
     });
 }
 
-export { loadUsers, loadUserDetails, loadVendors, loadVendorDetails };
+function verifyUser(token, resolve, reject) {
+  const myHeaders = new Headers();
+  
+  myHeaders.append("Authorization", `Bearer ${token}`);
+  
+  const requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow"
+  };
+  
+  fetch("http://localhost:4000/users/verify", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        resolve(result);
+      })
+      .catch(() => {
+        reject(null);
+      });
+
+  }
+export { loadUsers, loadTaskDetails,verifyUser, loadTask,loadUserList,loadUsersDetails };

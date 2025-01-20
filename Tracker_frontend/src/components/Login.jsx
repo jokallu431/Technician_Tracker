@@ -5,7 +5,9 @@ function Login() {
         const emailRef = useRef();
         const passwordRef = useRef();
         const navigate = useNavigate();
-
+        const navigateTo = (path) => () => {
+            navigate(path);
+        };
         const handleSubmit = (e) => { 
         e.preventDefault();
 
@@ -31,11 +33,31 @@ function Login() {
         .then((response) => response.json())
         .then((result) => {
           console.log("Login successful:", result);
+          localStorage.setItem("token", result.token);
           // Navigate to another page on success
-          navigate("/dashboard");
+          fetchUserDetails(result.token);
         })
         .catch((error) => console.error("Error while logging", error));
-    }
+    };
+    const fetchUserDetails = (token) => {
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${token}`);
+        myHeaders.append("Content-Type", "application/json");
+    
+        fetch("http://localhost:4000/users/verify", {
+          method: "GET",
+          headers: myHeaders,
+        })
+          .then((response) => response.json())
+          .then((userDetails) => {
+            console.log("User details fetched:", userDetails);
+              localStorage.setItem("role", userDetails.role);
+            // Redirect to dashboard
+            navigateTo("/dashboard",)(); // Replace with your routing logic
+
+            console.log("after navigate",userDetails.role);
+          })
+      };
 
     return (
         <>

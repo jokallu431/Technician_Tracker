@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router";
-import "react-datepicker/dist/react-datepicker.css";
+
 
 function  Create_Task(){
 
@@ -9,7 +9,7 @@ function  Create_Task(){
   const descriptionRef = useRef();
   const addressRef = useRef();
   const phoneRef = useRef();
-  const assignedonRef = useRef();
+  const dateRef = useRef();
   const navigate = useNavigate();
   
   // const [date, setDate] = useState(new Date());
@@ -22,8 +22,9 @@ function  Create_Task(){
       title: titleRef.current.value,
       description: descriptionRef.current.value,
       address: addressRef.current.value,
-      phone: phoneRef.current.value,
-      assignedon: assignedonRef.current.value
+      phoneon: phoneRef.current.value,
+      assigned_on: dateRef.current.value,
+      status: "unassigned",
     };
 
     console.log("Submitting:", formData);
@@ -137,12 +138,16 @@ return(
                         </div>
                       </div>
                       <div className="col-12">
-                        <div className="form-floating mb-3">   
-                        <input
-                            type="date" 
-                            className="form-control"  
-                            ref={assignedonRef}                
-                             />
+                        <div className="form-floating mb-3">
+                          <input
+                            type="date"
+                            className="form-control"
+                            id="available_Date"
+                            placeholder="Available Date"
+                            ref={dateRef}
+                          />
+                          <label htmlFor="available_Date" className="form-label">
+                          </label>
                         </div>
                       </div>
                       <br/>
