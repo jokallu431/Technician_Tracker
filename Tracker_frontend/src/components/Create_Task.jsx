@@ -10,6 +10,7 @@ function  Create_Task(){
   const addressRef = useRef();
   const phoneRef = useRef();
   const dateRef = useRef();
+  const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
   
   // const [date, setDate] = useState(new Date());
@@ -17,6 +18,36 @@ function  Create_Task(){
   const handleSubmit = (e) => { 
     e.preventDefault();
 
+    const token = localStorage.getItem("token");
+
+    if (!userId) {
+      // If userId is not available, fetch user details and then create the task
+      fetchUserDetails(token);
+    } else {
+      // If userId is already available, directly create the task
+      createTask(userId);
+    }
+  };
+
+  const fetchUserDetails = (token) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    fetch("http://localhost:4000/users/verify", {
+      method: "GET",
+      headers: myHeaders,
+    })
+      .then((response) => response.json())
+      .then((userDetails) => {
+        console.log("User details fetched:", userDetails);
+        setUserId(userDetails._id); // Store user ID in state
+        createTask(userDetails._id); // Pass user ID to create the task
+      })
+      .catch((error) => console.error("Error fetching user details:", error));
+  };
+
+  const createTask = (userDetailsId) => {
     const formData = {
       task_id: task_idRef.current.value,
       title: titleRef.current.value,
@@ -25,6 +56,7 @@ function  Create_Task(){
       phoneon: phoneRef.current.value,
       assigned_on: dateRef.current.value,
       status: "unassigned",
+      created_by: userDetailsId
     };
 
     console.log("Submitting:", formData);
