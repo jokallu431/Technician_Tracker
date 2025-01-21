@@ -1,6 +1,65 @@
-import React from "react";
+// import React from 'react'
+import { useState,useEffect } from "react";
+import { Link } from "react-router";
+import { EyeIcon } from './Icon';
+import {loadTask} from './api';
 
 const Card_Tiles = () => {
+  let [taskList, setTaskList] = useState([]);
+  useEffect(() => {
+    loadTask((data) => {
+
+         let rows = data.map((task) => {
+              return generateRow(task)
+          });
+          setTaskList(rows);
+      },() => {
+          setTaskList([]);
+      });
+    
+  }, []);
+  function generateRow(task) {
+    return (
+        <tr key = {task.task_id}>
+        <td scope="row">{task.task_id}</td>
+        <td>
+          {task.title}
+        </td>
+        <td>
+          <span className="badge badge-soft-success mb-0">
+          {task.description}
+          </span>
+        </td>
+        <td>{task.status}</td>
+        <td>
+          <ul className="list-inline mb-0">
+            <li className="list-inline-item">
+            <Link to={"edit"}
+              
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Edit"
+              className="px-2 text-primary"
+            >
+            {/* <i className="bx bx-pencil font-size-18"></i>  */}
+            </Link>
+            </li>
+            <li className="list-inline-item">
+            <Link to={`view/${task._id}`}
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="View"
+              className="px-2 text-primary"
+            >
+            <EyeIcon/>
+            </Link>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    );
+}
+    
   return (
     <>
       {/* <!-- Page Heading --> */}
@@ -105,6 +164,107 @@ const Card_Tiles = () => {
           </div>
         </div>
       </div>
+
+      {/* fetching data in table*/}
+      <div className="container">
+        <div className="row align-items-center">
+          <div className="col-md-6">
+            <div className="mb-3">
+              <h5 className="card-title">
+                Task List{" "}
+                <span className="text-muted fw-normal ms-2">({taskList.length})</span>
+              </h5>
+            </div>
+          </div>
+
+        </div>
+        
+          {
+                taskList.length === 0 ?
+
+                <div className="d-flex justify-content-center">
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Please wait...</span>
+                    </div>
+                </div>
+
+            :
+            <div className="row">
+          <div className="col-lg-12">
+            <div className="">
+              <div className="table-responsive">
+                <table className="table project-list-table table-nowrap align-middle table-borderless">
+                  <thead>
+                    <tr>
+                      <th scope="col">Task Id</th>
+                      <th scope="col">Title</th>
+                      <th scope="col">Description</th>
+                      <th scope="col">Task Status</th>
+                      <th scope="col">
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {taskList}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+            }
+
+        <div className="row g-0 align-items-center pb-4">
+          <div className="col-sm-6">
+            <div>
+              <p className="mb-sm-0">Showing 1 to 10 of 57 entries</p>
+            </div>
+          </div>
+          <div className="col-sm-6">
+            <div className="float-sm-end">
+              <ul className="pagination mb-sm-0">
+                <li className="page-item disabled">
+                  <a href="#" className="page-link">
+                    <i className="mdi mdi-chevron-left"></i>
+                  </a>
+                </li>
+                <li className="page-item active">
+                  <a href="#" className="page-link">
+                    1
+                  </a>
+                </li>
+                <li className="page-item">
+                  <a href="#" className="page-link">
+                    2
+                  </a>
+                </li>
+                <li className="page-item">
+                  <a href="#" className="page-link">
+                    3
+                  </a>
+                </li>
+                <li className="page-item">
+                  <a href="#" className="page-link">
+                    4
+                  </a>
+                </li>
+                <li className="page-item">
+                  <a href="#" className="page-link">
+                    5
+                  </a>
+                </li>
+                <li className="page-item">
+                  <a href="#" className="page-link">
+                    <i className="mdi mdi-chevron-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </>
   );
 };

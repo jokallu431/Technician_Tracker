@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from 'react-router';
 import logo from '../assets/Tech-Logo.ico'
 const ForgetPassword = () => {
@@ -53,7 +52,7 @@ const ForgetPassword = () => {
                                  </div>
                                  <div className="col-12">
                                      <div className="d-grid">
-                                     < Link to="/dashboard"className="btn bsb-btn-xl btn-primary" type="submit">Reset Password</Link>
+                                     <button className="btn bsb-btn-xl btn-primary" >Reset Password</button>
                                      </div>
                                  </div>
                                  </div>
