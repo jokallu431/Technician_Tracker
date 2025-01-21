@@ -74,7 +74,7 @@ const Assigned_Task = () => {
             <div className="mb-3">
               <h5 className="card-title">
                 Assigned List{" "}
-                <span className="text-muted fw-normal ms-2">(1)</span>
+                <span className="text-muted fw-normal ms-2">({taskList.length})</span>
               </h5>
             </div>
           </div>
@@ -111,10 +111,10 @@ const Assigned_Task = () => {
                 <table className="table project-list-table table-nowrap align-middle table-borderless">
                   <thead>
                     <tr>
-                      <th scope="col">Task Id</th>
+                    <th scope="col">Task Id</th>
                       <th scope="col">Title</th>
                       <th scope="col">Description</th>
-                      <th scope="col">Task Date</th>
+                      <th scope="col">Task Status</th>
                       <th scope="col">
                         Action
                       </th>
