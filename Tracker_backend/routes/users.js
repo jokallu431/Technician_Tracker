@@ -111,7 +111,7 @@ router.get('/verify', function (req, res, next){
     });
 });
 
-/* Token Verification */
+/* Get all User Details */
 router.get('/userlist', function (req, res, next){
     
   userModel.find().then((user)=>{
@@ -127,7 +127,7 @@ router.get('/edit', function (req, res, next){
     res.send(user);
   });
 });
-/* Update userv details */
+/* Update user details */
 router.patch('/user_update',function(req,res,next){
   let user= verifyToken(req.headers.authorization.split(" ")[1]);
   userModel.findById(user._id).updateOne(req.body).then((user)=>{
