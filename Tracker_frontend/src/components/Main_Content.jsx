@@ -18,7 +18,7 @@ const Main_Content = () => {
         {/* <!-- Begin Page Content --> */}
         <div className="container-fluid">
            {/* Conditional Rendering */}
-          {isDashboard ? <Outlet/>:<Card_Tiles /> }
+          {isDashboard ? <Outlet/>:<Card_Tiles/> }
 
           <Footer />
           {/* <!-- Content Row --> */}

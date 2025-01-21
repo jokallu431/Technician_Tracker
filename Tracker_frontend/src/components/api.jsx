@@ -19,7 +19,7 @@ function loadTask(resolve, reject) {
       method: "GET",
       redirect: "follow"
     };
-    
+     
     fetch("http://localhost:4000/task/task_get", requestOptions)
       .then((response) => response.json())
       .then((result) => {
@@ -37,7 +37,7 @@ const requestOptions = {
     redirect: "follow"
   };
   
-  fetch("", requestOptions)
+  fetch(`http://localhost:4000/task/task_get?_id=${_id}`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
       resolve(result);

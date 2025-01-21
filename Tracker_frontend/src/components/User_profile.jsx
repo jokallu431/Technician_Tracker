@@ -211,6 +211,8 @@ console.log("inside user profile");
                       id="phone"
                       placeholder="Enter your phone number"
                       ref={phoneRef}
+                      pattern="^[+]{1}(?:[0-9\-\(\)\/\.]\s?){6, 15}[0-9]{1}$"
+                      required="true"
                     />
                     <label htmlFor="phone" className="form-label">
                       Phone No.
@@ -225,7 +227,9 @@ console.log("inside user profile");
                       id="email"
                       placeholder="name@example.com"
                       ref={emailRef}
-                    />
+                      required = "true"
+                      pattern="/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i"
+                      />
                     <label htmlFor="email" className="form-label">
                       Email
                     </label>

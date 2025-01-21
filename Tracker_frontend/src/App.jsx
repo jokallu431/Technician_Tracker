@@ -43,12 +43,12 @@ function App() {
             <Route path="technicianlist" element={<Technician_List />} />
             <Route path="createBranch" element={<Create_Branch />} />
             <Route path="unassigned" element={<Unassigned_Task />} />
+            <Route path="/dashboard/unassigned/view/:id" element={<Views/>} />
             <Route path="assigned" element={<Assigned_Task />} />
             <Route path="profile" element={<User_profile />} />
             <Route path="getprofile" element={<Profile />} />
             <Route path="userlist" element={<User_list />} />
             {/* <Route path="edit" element={<Add/>} /> */}
-            <Route path="view/:id" element={<Views/>} />
             <Route path="delete" element={<Profile />} />
             {/* <Route path="userlist/add/:id" element={<User_profile />}></Route> */}
             {/* <Route path="add" element={<User_profile />} />

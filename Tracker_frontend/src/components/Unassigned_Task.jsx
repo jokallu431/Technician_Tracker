@@ -10,20 +10,35 @@ const Unassigned_Task = () => {
     
     useEffect(() => {
         loadTask((data) => {
-               
-           let rows = data.map((task) => {
-                
-                return generateRow(task);
+            
+            let rows = data.map((task) => {
+              console.log("task",task.status);
+              
+              if(task.status == "unassigned"){
+                console.log("unassigned"); 
+                  return generateRow(task);
+              }
             });
             setTaskList(rows);
+          
         },() => {
             setTaskList([]);
         });
     }, []);
 
+    const handleViewClick = (id) => {
+      loadTaskDetails(id, (data) => {
+        setTaskDetails(data);
+        // Optionally, navigate to a new route to view the details
+      }, () => {
+        console.error("Failed to load task details");
+      });
+    };
+
+        
     function generateRow(task) {
             return (
-                <tr key = {task.task_id}>
+                <tr key = {task._id}>
                 <td scope="row">{task.task_id}</td>
                 <td>
                   {task.title}
@@ -48,7 +63,8 @@ const Unassigned_Task = () => {
                     </Link>
                     </li>
                     <li className="list-inline-item">
-                    <Link to={`view/${task._id}`}
+                    <Link to={`./view/${task._id}`}
+                      onClick={() => handleViewClick(task._id)}
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
                       title="View"
@@ -62,7 +78,7 @@ const Unassigned_Task = () => {
               </tr>
             );
         }
-
+      
   return (
     <>
       <div className="container">
