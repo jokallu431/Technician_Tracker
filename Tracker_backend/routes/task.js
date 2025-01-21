@@ -20,7 +20,6 @@ const taskSchema = new Schema({
     title:String,
     description:Object,
     address:Object,
-    assigned_on:String,
     status:String,
     assigned_to:String,
     created_by:String

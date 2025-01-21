@@ -1,4 +1,4 @@
-import { useRef,useState } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router";
 
 
@@ -12,8 +12,7 @@ function  Create_Task(){
   const dateRef = useRef();
   const navigate = useNavigate();
   
-  // const date=Date()
-  // console.log(date)
+  // const [date, setDate] = useState(new Date());
 
   const handleSubmit = (e) => { 
     e.preventDefault();
@@ -151,6 +150,7 @@ return(
                           </label>
                         </div>
                       </div>
+                      <br/>
                       <div className="col-12">
                         <div className="d-grid">
                           <button className="btn bsb-btn-xl btn-primary">
