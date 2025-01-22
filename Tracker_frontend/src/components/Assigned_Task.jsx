@@ -1,31 +1,47 @@
 import React from 'react'
 import "../css/all_tables.css";
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
+import { Link} from 'react-router';
 import { EyeIcon } from './Icon';
 import {loadTask} from './api';
 
 const Assigned_Task = () => {
-    let [taskList, setTaskList] = useState([]);
+  let [taskList, setTaskList] = useState([]);
     
     useEffect(() => {
         loadTask((data) => {
-          
-          console.log("task after",data);
+            
             let rows = data.map((task) => {
-                console.log("task in loadTask",task.task_id);
-                
-                return generateRow(task);
+              console.log("task",task.status);
+              
+              if(task.status == "assigned"){
+                console.log("unassigned"); 
+                  return generateRow(task);
+              }
             });
             setTaskList(rows);
+          
         },() => {
             setTaskList([]);
+
         });
     }, []);
 
+    const handleViewClick = (id) => {
+      useEffect(() => {
+      loadTaskDetails(id, (data) => {
+        setTaskDetails(data);
+        // Optionally, navigate to a new route to view the details
+      }, () => {
+        console.error("Failed to load task details");
+      });
+    }, [id]);
+    };
+
+        
     function generateRow(task) {
             return (
-                <tr key = {task.task_id}>
+                <tr key = {task._id}>
                 <td scope="row">{task.task_id}</td>
                 <td>
                   {task.title}
@@ -35,26 +51,15 @@ const Assigned_Task = () => {
                   {task.description}
                   </span>
                 </td>
-                <td>{task.status}</td>
+                <td>{task.assigned_on}</td>
                 <td>
                   <ul className="list-inline mb-0">
                     <li className="list-inline-item">
-                    <Link to={`add/${task.task_id}`}
-                      
+                    <Link to={`./views/${task._id}`}
+                      onClick={() => handleViewClick(task._id)}
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
-                      title="Edit"
-                      className="px-2 text-primary"
-                    >
-                    <i className="bx bx-pencil font-size-18"></i> 
-                    </Link>
-                    </li>
-                    <li className="list-inline-item">
-                    <Link to={'delete'}
-                      
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title="Delete"
+                      title="View"
                       className="px-2 text-primary"
                     >
                     <EyeIcon/>
@@ -65,7 +70,7 @@ const Assigned_Task = () => {
               </tr>
             );
         }
-
+      
   return (
     <>
       <div className="container">
@@ -81,8 +86,7 @@ const Assigned_Task = () => {
           <div className="col-md-6">
             <div className="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
               <div>
-                <Link to={'add'}
-                  href="#"
+                <Link to={'./add'}
                   data-bs-toggle="modal"
                   data-bs-target=".add-new"
                   className="btn btn-primary"
@@ -111,10 +115,10 @@ const Assigned_Task = () => {
                 <table className="table project-list-table table-nowrap align-middle table-borderless">
                   <thead>
                     <tr>
-                    <th scope="col">Task Id</th>
+                      <th scope="col">Task Id</th>
                       <th scope="col">Title</th>
                       <th scope="col">Description</th>
-                      <th scope="col">Task Status</th>
+                      <th scope="col">Assigned On</th>
                       <th scope="col">
                         Action
                       </th>
@@ -183,4 +187,5 @@ const Assigned_Task = () => {
   );
 };
 
-export default Assigned_Task
+
+export default Assigned_Task;

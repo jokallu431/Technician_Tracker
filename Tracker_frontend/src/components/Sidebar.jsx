@@ -1,4 +1,4 @@
-import logo from "../assets/Tech-Logo.png";
+import logo from "../assets/Tech-Trace_Logo.ico";
 import { Link, useNavigate } from "react-router";
 const Sidebar = ({sidebarData}) => {
   const navigate = useNavigate();
