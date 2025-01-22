@@ -1,18 +1,3 @@
-function loadUsers(resolve, reject) {
-  const requestOptions = {
-      method: "GET",
-      redirect: "follow"
-    };
-    
-    fetch("https://fakerapi.it/api/v2/users?_quantity=10&_gender=male", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        resolve(result.data);
-      })
-      .catch(() => {
-        reject(null);
-      });
-}
 
 function loadTask(resolve, reject) {
   const requestOptions = {
@@ -20,7 +5,7 @@ function loadTask(resolve, reject) {
       redirect: "follow"
     };
      
-    fetch("http://localhost:4000/task/task_get", requestOptions)
+    fetch("http://localhost:4000/task/tasks_get", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         resolve(result);
@@ -37,7 +22,7 @@ const requestOptions = {
     redirect: "follow"
   };
   
-  fetch(`http://localhost:4000/task/task_get?_id=${_id}`, requestOptions)
+  fetch(`http://localhost:4000/task/tasks_get?_id=${_id}`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
       resolve(result);
@@ -100,4 +85,4 @@ function verifyUser(token, resolve, reject) {
       });
 
   }
-export { loadUsers, loadTaskDetails,verifyUser, loadTask,loadUserList,loadUsersDetails };
+export { loadTaskDetails,verifyUser, loadTask,loadUserList,loadUsersDetails };

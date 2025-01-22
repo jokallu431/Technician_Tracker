@@ -27,12 +27,14 @@ const Unassigned_Task = () => {
     }, []);
 
     const handleViewClick = (id) => {
+      useEffect(() => {
       loadTaskDetails(id, (data) => {
         setTaskDetails(data);
         // Optionally, navigate to a new route to view the details
       }, () => {
         console.error("Failed to load task details");
       });
+    }, [id]);
     };
 
         
@@ -48,22 +50,11 @@ const Unassigned_Task = () => {
                   {task.description}
                   </span>
                 </td>
-                <td>{task.status}</td>
+                <td>{task.assigned_on}</td>
                 <td>
                   <ul className="list-inline mb-0">
                     <li className="list-inline-item">
-                    <Link to={"edit"}
-                      
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title="Edit"
-                      className="px-2 text-primary"
-                    >
-                    <i className="bx bx-pencil font-size-18"></i> 
-                    </Link>
-                    </li>
-                    <li className="list-inline-item">
-                    <Link to={`./view/${task._id}`}
+                    <Link to={`./views/${task._id}`}
                       onClick={() => handleViewClick(task._id)}
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
@@ -126,7 +117,7 @@ const Unassigned_Task = () => {
                       <th scope="col">Task Id</th>
                       <th scope="col">Title</th>
                       <th scope="col">Description</th>
-                      <th scope="col">Task Status</th>
+                      <th scope="col">Assigned On</th>
                       <th scope="col">
                         Action
                       </th>

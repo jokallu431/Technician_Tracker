@@ -36,7 +36,7 @@ router.post('/task_create', function (req, res, next) {
 });
 
 /* Read task details */
-router.get('/task_get', function (req, res, next) {
+router.get('/tasks_get', function (req, res, next) {
 
   taskModel.find().then((tasks) => {
     console.log(tasks);
@@ -45,7 +45,15 @@ router.get('/task_get', function (req, res, next) {
   });
 });
 
+/* Read task details */
+router.get('/tasks_get/id:', function (req, res, next) {
+let id = req.query._id;
+  taskModel.findById(id).then((tasks) => {
+    console.log(tasks);
 
+    res.send(tasks)
+  });
+});
 /* Read task details */
 router.get('/task_Unassigned', function (req, res, next) {
 
@@ -74,11 +82,6 @@ router.get('/task_Unassigned', function (req, res, next) {
 // });
 // });
 router.patch('/task_update', function (req, res, next) {
-  // let user = verifyToken(req.headers.authorization.split(" ")[1]);
-  // if (user._id === req.body.created_by) {
-  //   console.log(req.body);
-  //   let _id = req.body._id;
-    // console.log("task id", req.body.task_id);
     let _id = req.query._id;
     taskModel.findById(_id).updateOne(req.body).then((task) => {
       console.log(task)
@@ -90,10 +93,6 @@ router.patch('/task_update', function (req, res, next) {
       data: []
     }) 
   });
-    
-  // }
-  // else {
-  // }
 });
 /* Delete task details */
 router.delete('/task_delete', function (req, res, next) {
