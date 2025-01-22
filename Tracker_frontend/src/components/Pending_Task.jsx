@@ -1,62 +1,65 @@
-
+import React from 'react'
 import "../css/all_tables.css";
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
+import { Link} from 'react-router';
 import { EyeIcon } from './Icon';
-import {loadUsers} from './api';
-const Pending_Task = () => {
-  let [usersList, setUsersList] = useState([]);
+import {loadTask} from './api';
+
+const Unassigned_Task = () => {
+  let [taskList, setTaskList] = useState([]);
     
     useEffect(() => {
-        loadUsers((data) => {
-            let rows = data.map((user) => {
-                return generateRow(user);
+        loadTask((data) => {
+            
+            let rows = data.map((task) => {
+              console.log("task",task.status);
+              
+              if(task.status == "pending"){
+                console.log("unassigned"); 
+                  return generateRow(task);
+              }
             });
-            setUsersList(rows);
+            setTaskList(rows);
+          
         },() => {
-            setUsersList([]);
+            setTaskList([]);
+
         });
     }, []);
 
-    function generateRow(user) {
+    const handleViewClick = (id) => {
+      useEffect(() => {
+      loadTaskDetails(id, (data) => {
+        setTaskDetails(data);
+        // Optionally, navigate to a new route to view the details
+      }, () => {
+        console.error("Failed to load task details");
+      });
+    }, [id]);
+    };
+
+        
+    function generateRow(task) {
             return (
-                <tr key = {user.id}>
-                <td scope="row">{user.id}</td>
+                <tr key = {task._id}>
+                <td scope="row">{task.task_id}</td>
                 <td>
-                  <img
-                    src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                    alt=""
-                    className="avatar-sm rounded-circle me-2"
-                  />
-                  <a href="#" className="text-body">
-                  {user.firstname}
-                  </a>
+                  {task.title}
                 </td>
                 <td>
                   <span className="badge badge-soft-success mb-0">
-                  {user.lastname}
+                  {task.description}
                   </span>
                 </td>
-                <td>{user.email}</td>
+                <td>{task.assigned_on}</td>
                 <td>
                   <ul className="list-inline mb-0">
                     <li className="list-inline-item">
-                    <Link to={'add'}
-                      
+                    <Link to={`./views/${task._id}`}
+                      onClick={() => handleViewClick(task._id)}
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
-                      title="Edit"
-                      className="px-2 text-primary"
-                    >
-                    <i className="bx bx-pencil font-size-18"></i> 
-                    </Link>
-                    </li>
-                    <li className="list-inline-item">
-                    <Link to={'delete'}
-                      
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title="Delete"
+                      title="View"
                       className="px-2 text-primary"
                     >
                     <EyeIcon/>
@@ -67,7 +70,7 @@ const Pending_Task = () => {
               </tr>
             );
         }
-
+      
   return (
     <>
       <div className="container">
@@ -76,15 +79,14 @@ const Pending_Task = () => {
             <div className="mb-3">
               <h5 className="card-title">
                 Pending List{" "}
-                <span className="text-muted fw-normal ms-2">({usersList.length})</span>
+                <span className="text-muted fw-normal ms-2">({taskList.length})</span>
               </h5>
             </div>
           </div>
           <div className="col-md-6">
             <div className="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
               <div>
-                <Link to={'add'}
-                  href="#"
+                <Link to={'./add'}
                   data-bs-toggle="modal"
                   data-bs-target=".add-new"
                   className="btn btn-primary"
@@ -97,7 +99,7 @@ const Pending_Task = () => {
         </div>
         
           {
-                usersList.length === 0 ?
+                taskList.length === 0 ?
 
                 <div className="d-flex justify-content-center">
                     <div className="spinner-border" role="status">
@@ -113,17 +115,17 @@ const Pending_Task = () => {
                 <table className="table project-list-table table-nowrap align-middle table-borderless">
                   <thead>
                     <tr>
-                      <th scope="col">Sr No.</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Position</th>
-                      <th scope="col">Email</th>
+                      <th scope="col">Task Id</th>
+                      <th scope="col">Title</th>
+                      <th scope="col">Description</th>
+                      <th scope="col">Assigned On</th>
                       <th scope="col">
                         Action
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {usersList}
+                    {taskList}
                   </tbody>
                 </table>
               </div>
@@ -185,4 +187,5 @@ const Pending_Task = () => {
   );
 };
 
-export default Pending_Task;
+
+export default Unassigned_Task;

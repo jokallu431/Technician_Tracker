@@ -36,24 +36,22 @@ function App() {
           {/* Protected Routes */}
           <Route path="/dashboard" element={<Tech_Layout />}>
             <Route index element={<Tech_Dashboard />} />
-            <Route path="pending" element={<Pending_Task />} />
-            <Route path="completed" element={<Completed_Task />} />
             <Route path="createTask" element={<Create_Task />} />
             <Route path="edit" element={<Edit_Task />}/>
             <Route path="technicianlist" element={<Technician_List />} />
             <Route path="createBranch" element={<Create_Branch />} />
+            <Route path="pending" element={<Pending_Task />} />
+            <Route path="completed" element={<Completed_Task />} />
             <Route path="unassigned" element={<Unassigned_Task />} />
-            <Route path="/dashboard/unassigned/view/:id" element={<Views/>} />
             <Route path="assigned" element={<Assigned_Task />} />
+            <Route path="/dashboard/unassigned/views/:id" element={<Views/>} />
+            <Route path="/dashboard/pending/views/:id" element={<Views/>} />
+            <Route path="/dashboard/assigned/views/:id" element={<Views/>} />
+            <Route path="/dashboard/completed/views/:id" element={<Views/>} />
             <Route path="profile" element={<User_profile />} />
             <Route path="getprofile" element={<Profile />} />
             <Route path="userlist" element={<User_list />} />
-            {/* <Route path="edit" element={<Add/>} /> */}
             <Route path="delete" element={<Profile />} />
-            {/* <Route path="userlist/add/:id" element={<User_profile />}></Route> */}
-            {/* <Route path="add" element={<User_profile />} />
-            <Route path="view" element={<Completed_Task />} />
-            <Route path="delete" element={<Profile />} /> */}
           </Route>
         </Routes>
       </BrowserRouter>

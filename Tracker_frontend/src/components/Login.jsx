@@ -52,6 +52,7 @@ function Login() {
           .then((userDetails) => {
             console.log("User details fetched:", userDetails);
               localStorage.setItem("role", userDetails.role);
+              localStorage.setItem("id", userDetails._id);
             // Redirect to dashboard
             navigateTo("/dashboard",)(); // Replace with your routing logic
 

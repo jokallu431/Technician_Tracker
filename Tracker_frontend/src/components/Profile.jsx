@@ -1,60 +1,61 @@
-import { useRef,useState} from "react";
-import { useNavigate } from "react-router";
+import { useRef,useState,useEffect } from "react";
+import { useNavigate,useParams} from "react-router";
+import { loadUsersDetails } from "./api";
 
 function Profile() {
   const nameRef = useRef();
-  const phoneRef = useRef();
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const roleRef = useRef();
-  const navigate = useNavigate();
+    const phoneRef = useRef();
+    const emailRef = useRef();
+    const passwordRef = useRef();
+    const roleRef = useRef();
+    const navigate = useNavigate();
 
   let [usersList, setUsersList] = useState([]);
     
-  useEffect(() => {
-      loadUserList((data) => {
-          let rows = data.map((user) => {
-              console.log(user);
-              return generateRow(user);
-          });
-          setUsersList(rows);
-      },() => {
-          setUsersList([]);
-      });
-  }, []);
-
-  const handleSubmit = (e) => { 
-    e.preventDefault();
-
-    // Collect form data using useRef
-    const formData = {
+        useEffect(() => {
+          id = localStorage.getItem("id");
+          loadUsersDetails((data) => {
+                let rows = data.map((user) => {
+                    console.log(user);
+                    return generateRow(user);
+                });
+                setUsersList(rows);
+            },() => {
+                setUsersList([]);
+            });
+        }, []);
+      
+        const handleSubmit = (e) => { 
+          e.preventDefault();
+      
+          // Collect form data using useRef
+          const formData = {
       name: nameRef.current.value,
       phone: phoneRef.current.value,
       email: emailRef.current.value,
       password: passwordRef.current.value,
       role: roleRef.current.value,
     };
-
-    console.log("Submitting:", formData);
-
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    };
-      console.log("after stringify",formData);
       
-    fetch("http://localhost:4000/users/profile", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("Profile created successfully:", result);
-        // Navigate to another page on success
-        
-        navigate("/login");
-      })
-      .catch((error) => console.error("Error creating profile:", error));
-  };
-
+          console.log("Submitting:", formData);
+      
+          const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+          };
+            console.log("after stringify",formData);
+            
+          fetch("http://localhost:4000/users/user_update", requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+              console.log("Profile updated successfully:", result);
+              // Navigate to another page on success
+              
+              navigate("/login");
+            })
+            .catch((error) => console.error("Error creating profile:", error));
+        };
   return (
     <>
       <section className="bg-light p-3 p-md-4 p-xl-5">
@@ -82,7 +83,7 @@ function Profile() {
                             className="form-control"
                             id="name"
                             placeholder="Enter your full name"
-                            value={name}
+                            defaultValue={usersList.name}
                             ref={nameRef}
                             required
                           />
@@ -98,6 +99,7 @@ function Profile() {
                             className="form-control"
                             id="phone"
                             placeholder="Enter your phone number"
+                            defaultValue={usersList.phone}
                             ref={phoneRef}
                           />
                           <label htmlFor="phone" className="form-label">
@@ -112,6 +114,7 @@ function Profile() {
                             className="form-control"
                             id="email"
                             placeholder="name@example.com"
+                            defaultValue={usersList.email}
                             ref={emailRef}
                           />
                           <label htmlFor="email" className="form-label">
@@ -126,6 +129,7 @@ function Profile() {
                             className="form-control"
                             id="password"
                             placeholder="Password"
+                            defaultValue={usersList.password}
                             ref={passwordRef}
                           />
                           <label htmlFor="password" className="form-label">
@@ -139,6 +143,7 @@ function Profile() {
                             className="form-control"
                             name="role"
                             ref={roleRef}
+                            value={usersList.role}
                             required
                           >
                             <option value="" disabled>
@@ -170,4 +175,3 @@ function Profile() {
 }
 
 export default Profile;
-
